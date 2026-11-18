@@ -69,8 +69,8 @@ const values = [
         <div class="col-lg-6">
           <div class="rounded-4 overflow-hidden shadow-lg" style="height: 420px;">
             <img
-              src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80"
-              alt="Safari Care Land Cruiser on the Serengeti Plains"
+              src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80"
+              alt="Safari Land Cruiser in Tanzania"
               class="w-100 h-100 object-fit-cover"
             />
           </div>
@@ -136,8 +136,8 @@ const values = [
           <div class="col-lg-6 order-lg-1">
             <div class="rounded-4 overflow-hidden shadow-sm" style="height: 360px;">
               <img
-                src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1000&q=80"
-                alt="Safari Land Cruiser in Tanzania"
+                src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=80"
+                alt="Safari Care Land Cruiser on the Serengeti Plains"
                 class="w-100 h-100 object-fit-cover"
               />
             </div>
