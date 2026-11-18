@@ -197,25 +197,6 @@ useSeoMeta({
               </div>
             </div>
 
-            <!-- Key Highlights -->
-            <div v-if="safari.highlights && safari.highlights.length" class="mb-5">
-              <h2 class="font-serif h4 fw-bold text-sc-forest mb-3">
-                Safari Highlights & Wildlife Encounters
-              </h2>
-              <div class="row g-3">
-                <div
-                  v-for="(hl, i) in safari.highlights"
-                  :key="i"
-                  class="col-md-6"
-                >
-                  <div class="d-flex align-items-start gap-2 bg-white p-3 rounded-3 shadow-sm border border-light h-100">
-                    <i class="bi bi-check-circle-fill text-sc-gold mt-1 flex-shrink-0 fs-5"></i>
-                    <span class="small text-muted">{{ hl }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- Day by Day Itinerary -->
             <div class="mb-5">
               <div class="d-flex align-items-center justify-content-between mb-4">
@@ -381,9 +362,30 @@ useSeoMeta({
             </div>
           </div>
 
-          <!-- Right Column: Sticky Booking & Inquiry Card -->
+          <!-- Right Column: Safari Highlights & Sticky Inquiry Card -->
           <div class="col-lg-4">
             <div class="sticky-top" style="top: 110px;">
+              <!-- Safari Highlights & Wildlife Encounters Card -->
+              <div v-if="safari.highlights && safari.highlights.length" class="card card-sc border-0 shadow-sm p-4 bg-white rounded-4 mb-4">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span class="badge-sc-gold small py-0 px-2" style="font-size: 0.725rem;">Key Highlights</span>
+                </div>
+                <h3 class="font-serif h5 fw-bold text-sc-forest mb-3">
+                  Safari Highlights & Wildlife
+                </h3>
+                <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                  <li
+                    v-for="(hl, i) in safari.highlights"
+                    :key="i"
+                    class="d-flex align-items-start gap-2 small text-muted"
+                  >
+                    <i class="bi bi-check-circle-fill text-sc-gold mt-1 flex-shrink-0 fs-6"></i>
+                    <span>{{ hl }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Tailor This Journey Card -->
               <div class="card card-sc border-0 shadow-lg p-4 bg-white rounded-4">
                 <h3 class="font-serif h4 fw-bold text-sc-forest mb-2">
                   Tailor This Journey
