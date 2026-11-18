@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ItineraryTimeline from '~/components/safari/ItineraryTimeline.vue';
+import SafariRouteMap from '~/components/safari/SafariRouteMap.vue';
 import SafariCard from '~/components/safari/SafariCard.vue';
 import type { SafariPackage } from '~/shared/types';
 
@@ -18,12 +19,6 @@ const relatedSafaris = computed(() => {
     .filter((s) => s.circuit === safari.value?.circuit || s.travelStyle === safari.value?.travelStyle)
     .slice(0, 3);
 });
-
-const printItinerary = () => {
-  if (typeof window !== 'undefined') {
-    window.print();
-  }
-};
 
 useSeoMeta({
   title: () => safari.value ? `${safari.value.title} | Safari Care Tanzania` : 'Safari Package | Safari Care',
@@ -113,20 +108,22 @@ useSeoMeta({
           </p>
 
           <!-- Top Action Bar -->
-          <div class="d-flex flex-wrap gap-3 align-items-center d-print-none pt-2">
+          <div class="d-flex flex-wrap gap-3 align-items-center pt-2">
             <NuxtLink
               :to="{ path: '/plan-your-safari', query: { safari: safari.slug, style: safari.travelStyle, duration: safari.durationDays } }"
               class="btn btn-sc-gold text-white px-4 py-2"
             >
               <i class="bi bi-calendar-check me-2"></i> Customize This Safari
             </NuxtLink>
-            <button
-              type="button"
-              class="btn btn-outline-light px-3 py-2"
-              @click="printItinerary"
+            <a
+              :href="`https://wa.me/255700000000?text=${encodeURIComponent(`Hello Safari Care, I would like to inquire about the ${safari.title}.`)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline-light px-3 py-2 d-inline-flex align-items-center gap-2"
             >
-              <i class="bi bi-printer me-2"></i> Print / Save PDF
-            </button>
+              <i class="bi bi-whatsapp text-success"></i>
+              <span>Quick WhatsApp Inquiry</span>
+            </a>
           </div>
         </div>
       </section>
@@ -184,7 +181,7 @@ useSeoMeta({
           <!-- Left Column: Itinerary Details & Gallery -->
           <div class="col-lg-8">
             <!-- Destinations Visited Strip -->
-            <div class="destinations-strip bg-white p-4 rounded-4 shadow-sm mb-5 border border-light">
+            <div class="destinations-strip bg-white p-4 rounded-4 shadow-sm mb-4 border border-light">
               <h2 class="font-serif h6 fw-bold text-sc-forest text-uppercase mb-3">
                 <i class="bi bi-map-fill text-sc-gold me-2"></i> Destinations & Sanctuaries on this Itinerary
               </h2>
@@ -198,6 +195,13 @@ useSeoMeta({
                 </span>
               </div>
             </div>
+
+            <!-- Interactive Route & Circuit Map -->
+            <SafariRouteMap
+              :destinations="safari.destinations"
+              :circuit="safari.circuit"
+              :title="safari.title"
+            />
 
             <!-- Key Highlights -->
             <div v-if="safari.highlights && safari.highlights.length" class="mb-5">
@@ -522,23 +526,6 @@ useSeoMeta({
   transition: transform 0.4s ease;
   &:hover {
     transform: scale(1.05);
-  }
-}
-
-@media print {
-  .safari-hero {
-    margin-top: 0;
-    padding-top: 2rem !important;
-    background-color: #ffffff !important;
-    color: #000000 !important;
-  }
-
-  .hero-bg, .hero-overlay {
-    display: none !important;
-  }
-
-  .text-white, .text-white-90 {
-    color: #232724 !important;
   }
 }
 </style>
