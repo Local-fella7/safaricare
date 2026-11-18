@@ -16,9 +16,9 @@ const values = [
     text: 'A portion of every safari booked directly supports local community schools and anti-poaching wildlife corridor protection in northern Tanzania.'
   },
   {
-    icon: 'bi-shield-shaded',
-    title: 'Fair & Ethical Employment',
-    text: 'Our safari guides and mountain porters receive industry-leading fair compensation, full insurance coverage, and continuous professional training.'
+    icon: 'bi-person-badge-fill',
+    title: 'Professional Guides',
+    text: 'Certified, multilingual Tanzanian naturalist guides with decades of bushcraft experience, keen wildlife tracking instincts, and continuous professional training.'
   },
   {
     icon: 'bi-gem',
