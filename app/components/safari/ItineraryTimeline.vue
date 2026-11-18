@@ -104,12 +104,27 @@ const allExpanded = computed(() => {
                 {{ item.description }}
               </p>
 
-              <div class="itinerary-meta-badges d-flex flex-wrap gap-2 pt-2 border-top">
+              <div v-if="item.activities && item.activities.length" class="activities-tags d-flex flex-wrap gap-1 mb-3">
+                <span
+                  v-for="(act, aIdx) in item.activities"
+                  :key="aIdx"
+                  class="badge bg-sc-forest bg-opacity-10 text-sc-forest small fw-normal py-1 px-2"
+                >
+                  <i class="bi bi-tag-fill text-sc-gold me-1" style="font-size: 0.75rem;"></i>
+                  {{ act }}
+                </span>
+              </div>
+
+              <div class="itinerary-meta-badges d-flex flex-wrap gap-3 pt-2 border-top">
+                <div v-if="item.driveTime" class="small text-muted d-flex align-items-center gap-1">
+                  <i class="bi bi-speedometer2 text-sc-forest"></i>
+                  <span><strong>Drive / Transit:</strong> {{ item.driveTime }}</span>
+                </div>
                 <div v-if="item.accommodation" class="small text-muted d-flex align-items-center gap-1">
                   <i class="bi bi-houses-fill text-sc-gold"></i>
                   <span><strong>Lodging:</strong> {{ item.accommodation }}</span>
                 </div>
-                <div v-if="item.meals" class="small text-muted d-flex align-items-center gap-1 ms-sm-3">
+                <div v-if="item.meals" class="small text-muted d-flex align-items-center gap-1">
                   <i class="bi bi-cup-hot-fill text-sc-gold"></i>
                   <span><strong>Meals:</strong> {{ item.meals }}</span>
                 </div>

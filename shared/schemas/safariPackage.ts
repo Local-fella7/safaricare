@@ -5,7 +5,9 @@ export const itineraryDaySchema = z.object({
   title: z.string().min(3),
   description: z.string().min(10),
   accommodation: z.string().optional(),
-  meals: z.string().optional()
+  meals: z.string().optional(),
+  activities: z.array(z.string()).default([]),
+  driveTime: z.string().optional()
 });
 
 export const safariPackageSchema = z.object({
@@ -23,6 +25,11 @@ export const safariPackageSchema = z.object({
   inclusions: z.array(z.string()).min(1),
   exclusions: z.array(z.string()).min(1),
   highlights: z.array(z.string()).default([]),
+  startLocation: z.string().default('Arusha / Kilimanjaro Airport (JRO)'),
+  endLocation: z.string().default('Arusha / Kilimanjaro Airport (JRO)'),
+  bestSeason: z.string().default('Year-round (Peak: June–October & Dec–March)'),
+  accommodationNotes: z.string().optional(),
+  customizationOptions: z.array(z.string()).default([]),
   priceNote: z.string().default('Tailor-made private journey - Inquire for custom quote'),
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),

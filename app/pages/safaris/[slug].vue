@@ -19,6 +19,12 @@ const relatedSafaris = computed(() => {
     .slice(0, 3);
 });
 
+const printItinerary = () => {
+  if (typeof window !== 'undefined') {
+    window.print();
+  }
+};
+
 useSeoMeta({
   title: () => safari.value ? `${safari.value.title} | Safari Care Tanzania` : 'Safari Package | Safari Care',
   description: () => safari.value?.summary ?? 'Tailored Tanzanian safari journey with Safari Care.',
@@ -72,7 +78,7 @@ useSeoMeta({
 
         <div class="container position-relative z-index-1 py-4 py-md-5">
           <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb" class="mb-3">
+          <nav aria-label="breadcrumb" class="mb-3 d-print-none">
             <ol class="breadcrumb small text-white-50">
               <li class="breadcrumb-item">
                 <NuxtLink to="/" class="text-white-50 text-decoration-none">Home</NuxtLink>
@@ -102,9 +108,73 @@ useSeoMeta({
             {{ safari.title }}
           </h1>
 
-          <p class="lead text-white-90 fs-5 mb-0 pe-lg-5 text-shadow-sm" style="max-width: 820px;">
+          <p class="lead text-white-90 fs-5 mb-4 pe-lg-5 text-shadow-sm" style="max-width: 820px;">
             {{ safari.summary }}
           </p>
+
+          <!-- Top Action Bar -->
+          <div class="d-flex flex-wrap gap-3 align-items-center d-print-none pt-2">
+            <NuxtLink
+              :to="{ path: '/plan-your-safari', query: { safari: safari.slug, style: safari.travelStyle, duration: safari.durationDays } }"
+              class="btn btn-sc-gold text-white px-4 py-2"
+            >
+              <i class="bi bi-calendar-check me-2"></i> Customize This Safari
+            </NuxtLink>
+            <button
+              type="button"
+              class="btn btn-outline-light px-3 py-2"
+              @click="printItinerary"
+            >
+              <i class="bi bi-printer me-2"></i> Print / Save PDF
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logistics Ribbon / Quick Facts Strip -->
+      <section class="logistics-ribbon bg-white border-bottom py-3 shadow-sm">
+        <div class="container">
+          <div class="row g-3 text-center text-md-start align-items-center">
+            <div class="col-6 col-md-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-geo-alt-fill text-sc-forest fs-4"></i>
+                <div class="text-start">
+                  <div class="small text-muted" style="font-size: 0.75rem;">Starts & Finishes:</div>
+                  <div class="fw-bold text-sc-forest small">{{ safari.startLocation || 'Arusha / JRO' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-calendar3 text-sc-gold fs-4"></i>
+                <div class="text-start">
+                  <div class="small text-muted" style="font-size: 0.75rem;">Best Season:</div>
+                  <div class="fw-bold text-sc-forest small">{{ safari.bestSeason || 'Year-round' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-truck text-sc-forest fs-4"></i>
+                <div class="text-start">
+                  <div class="small text-muted" style="font-size: 0.75rem;">Safari Vehicle:</div>
+                  <div class="fw-bold text-sc-forest small">Private 4x4 Land Cruiser</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-shield-check text-sc-gold fs-4"></i>
+                <div class="text-start">
+                  <div class="small text-muted" style="font-size: 0.75rem;">Party Guarantee:</div>
+                  <div class="fw-bold text-sc-forest small">100% Private (No Strangers)</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -116,7 +186,7 @@ useSeoMeta({
             <!-- Destinations Visited Strip -->
             <div class="destinations-strip bg-white p-4 rounded-4 shadow-sm mb-5 border border-light">
               <h2 class="font-serif h6 fw-bold text-sc-forest text-uppercase mb-3">
-                <i class="bi bi-geo-alt-fill text-sc-gold me-2"></i> Destinations Visited on this Journey
+                <i class="bi bi-map-fill text-sc-gold me-2"></i> Destinations & Sanctuaries on this Itinerary
               </h2>
               <div class="d-flex flex-wrap gap-2">
                 <span
@@ -124,7 +194,7 @@ useSeoMeta({
                   :key="d"
                   class="badge bg-sc-forest bg-opacity-10 text-sc-forest px-3 py-2 fs-6 fw-medium"
                 >
-                  {{ d }}
+                  <i class="bi bi-geo-alt text-sc-gold me-1"></i> {{ d }}
                 </span>
               </div>
             </div>
@@ -132,7 +202,7 @@ useSeoMeta({
             <!-- Key Highlights -->
             <div v-if="safari.highlights && safari.highlights.length" class="mb-5">
               <h2 class="font-serif h4 fw-bold text-sc-forest mb-3">
-                Safari Highlights
+                Safari Highlights & Wildlife Encounters
               </h2>
               <div class="row g-3">
                 <div
@@ -162,6 +232,54 @@ useSeoMeta({
                 </span>
               </div>
               <ItineraryTimeline :days="safari.itinerary" />
+            </div>
+
+            <!-- Accommodation Standards & Camp Notes -->
+            <div class="accommodation-notes-box bg-white p-4 rounded-4 shadow-sm mb-5 border border-light">
+              <h3 class="font-serif h5 fw-bold text-sc-forest mb-2 d-flex align-items-center gap-2">
+                <i class="bi bi-houses-fill text-sc-gold"></i>
+                <span>Accommodation & Wilderness Camp Standards</span>
+              </h3>
+              <p class="small text-muted mb-3">
+                {{ safari.accommodationNotes || 'We partner with handpicked luxury safari lodges and permanent tented sanctuaries offering solar electricity, private verandas, en-suite hot bush showers, and gourmet dining inspired by local Tanzanian produce.' }}
+              </p>
+              <div class="row g-3 pt-2">
+                <div class="col-sm-4">
+                  <div class="p-2 bg-light rounded text-center small text-muted">
+                    <i class="bi bi-wifi text-sc-forest me-1"></i> Wi-Fi at Main Lodges
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="p-2 bg-light rounded text-center small text-muted">
+                    <i class="bi bi-battery-charging text-sc-forest me-1"></i> Solar Inverter Power
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="p-2 bg-light rounded text-center small text-muted">
+                    <i class="bi bi-cup-hot text-sc-forest me-1"></i> Bush Dinners & Bar
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customization & Extension Options -->
+            <div v-if="safari.customizationOptions && safari.customizationOptions.length" class="mb-5">
+              <h3 class="font-serif h5 fw-bold text-sc-forest mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-sliders text-sc-gold"></i>
+                <span>Recommended Itinerary Add-Ons & Customizations</span>
+              </h3>
+              <div class="row g-3">
+                <div
+                  v-for="(opt, optIdx) in safari.customizationOptions"
+                  :key="optIdx"
+                  class="col-md-6"
+                >
+                  <div class="p-3 bg-white rounded-3 shadow-sm border border-light h-100 d-flex align-items-start gap-2">
+                    <i class="bi bi-plus-circle-fill text-sc-forest mt-1 flex-shrink-0"></i>
+                    <span class="small text-muted">{{ opt }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Photo Gallery Preview -->
@@ -230,10 +348,36 @@ useSeoMeta({
                 </div>
               </div>
             </div>
+
+            <!-- Safari Packing & Preparation Tips -->
+            <div class="packing-tips-box bg-white p-4 rounded-4 shadow-sm mb-5 border border-light">
+              <h3 class="font-serif h5 fw-bold text-sc-forest mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-backpack text-sc-gold"></i>
+                <span>Essential Safari Packing & Tips for this Journey</span>
+              </h3>
+              <div class="row g-3 small text-muted">
+                <div class="col-md-6 d-flex align-items-start gap-2">
+                  <i class="bi bi-check2-circle text-sc-forest mt-1"></i>
+                  <span>Neutral-colored clothing (khaki, tan, olive green); avoid dark blue/black in tsetse fly zones.</span>
+                </div>
+                <div class="col-md-6 d-flex align-items-start gap-2">
+                  <i class="bi bi-check2-circle text-sc-forest mt-1"></i>
+                  <span>Quality binoculars (8x42 or 10x42) and telephoto camera lens (minimum 300mm recommended).</span>
+                </div>
+                <div class="col-md-6 d-flex align-items-start gap-2">
+                  <i class="bi bi-check2-circle text-sc-forest mt-1"></i>
+                  <span>Warm layers or fleece for early morning Ngorongoro crater rim game drives (elevations exceed 2,200m).</span>
+                </div>
+                <div class="col-md-6 d-flex align-items-start gap-2">
+                  <i class="bi bi-check2-circle text-sc-forest mt-1"></i>
+                  <span>Type G (UK standard 3-pin) electrical plug adapter, insect repellent (DEET), and sunscreen.</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Right Column: Sticky Booking & Inquiry Card -->
-          <div class="col-lg-4">
+          <div class="col-lg-4 d-print-none">
             <div class="sticky-top" style="top: 110px;">
               <div class="card card-sc border-0 shadow-lg p-4 bg-white rounded-4">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -309,7 +453,7 @@ useSeoMeta({
         </div>
 
         <!-- Related Itineraries Recommendations -->
-        <div v-if="relatedSafaris.length > 0" class="mt-5 pt-5 border-top">
+        <div v-if="relatedSafaris.length > 0" class="mt-5 pt-5 border-top d-print-none">
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
             <div>
               <span class="badge-sc-terracotta d-inline-block mb-2">Alternative Journeys</span>
@@ -378,6 +522,23 @@ useSeoMeta({
   transition: transform 0.4s ease;
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+@media print {
+  .safari-hero {
+    margin-top: 0;
+    padding-top: 2rem !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .hero-bg, .hero-overlay {
+    display: none !important;
+  }
+
+  .text-white, .text-white-90 {
+    color: #232724 !important;
   }
 }
 </style>
