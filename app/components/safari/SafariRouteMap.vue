@@ -7,31 +7,22 @@ const props = defineProps<{
   title: string;
 }>();
 
-// View mode: 'satellite' (Live Terrain Map with real coordinates) or 'route' (Editorial Expedition Chart)
-const activeView = ref<'satellite' | 'route'>('satellite');
-
-// Selected waypoint for popover
-const selectedPoint = ref<string | null>(null);
-
 // Leaflet map refs
 const mapContainer = ref<HTMLElement | null>(null);
 let leafletMap: any = null;
 let currentPolyline: any = null;
 let currentMarkers: any[] = [];
 
-// Waypoint definition with both SVG canvas coordinates (x, y) and real Geographic coordinates (lat, lng)
+// Waypoint definition with real Geographic coordinates (lat, lng)
 interface WaypointDef {
   id: string;
   name: string;
   shortName: string;
   lat: number;
   lng: number;
-  x: number;
-  y: number;
   region: string;
   type: 'park' | 'mountain' | 'gateway' | 'island';
   description: string;
-  icon: string;
 }
 
 const allWaypoints: Record<string, WaypointDef> = {
@@ -41,12 +32,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Arusha',
     lat: -3.3869,
     lng: 36.6830,
-    x: 590,
-    y: 165,
     region: 'Northern Circuit',
     type: 'gateway',
-    description: 'Safari Care headquarters and expedition staging base at the foot of Mount Meru.',
-    icon: 'bi-compass'
+    description: 'Safari Care headquarters and expedition staging base at the foot of Mount Meru.'
   },
   kilimanjaro: {
     id: 'kilimanjaro',
@@ -54,12 +42,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Kilimanjaro',
     lat: -3.0674,
     lng: 37.3556,
-    x: 650,
-    y: 135,
     region: 'Northern Circuit',
     type: 'mountain',
-    description: 'Roof of Africa and the highest free-standing volcanic mountain on Earth.',
-    icon: 'bi-triangle-fill'
+    description: 'Roof of Africa and the highest free-standing volcanic mountain on Earth.'
   },
   tarangire: {
     id: 'tarangire',
@@ -67,12 +52,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Tarangire',
     lat: -3.8333,
     lng: 36.0000,
-    x: 530,
-    y: 250,
     region: 'Northern Circuit',
     type: 'park',
-    description: 'Ancient baobab trees and the largest concentration of elephant herds in East Africa.',
-    icon: 'bi-tree-fill'
+    description: 'Ancient baobab trees and the largest concentration of elephant herds in East Africa.'
   },
   manyara: {
     id: 'manyara',
@@ -80,12 +62,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Lake Manyara',
     lat: -3.5000,
     lng: 35.8000,
-    x: 495,
-    y: 195,
     region: 'Northern Circuit',
     type: 'park',
-    description: 'Great Rift Valley lake known for tree-climbing lions, pink flamingos, and groundwater forests.',
-    icon: 'bi-water'
+    description: 'Great Rift Valley lake known for tree-climbing lions, pink flamingos, and groundwater forests.'
   },
   ngorongoro: {
     id: 'ngorongoro',
@@ -93,12 +72,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Ngorongoro',
     lat: -3.1667,
     lng: 35.5833,
-    x: 440,
-    y: 160,
     region: 'Northern Circuit',
     type: 'park',
-    description: 'UNESCO World Heritage 600m unbroken caldera sheltering 25,000 large mammals and black rhinos.',
-    icon: 'bi-shield-shaded'
+    description: 'UNESCO World Heritage 600m unbroken caldera sheltering 25,000 large mammals and black rhinos.'
   },
   serengeti: {
     id: 'serengeti',
@@ -106,12 +82,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Central Serengeti',
     lat: -2.4333,
     lng: 34.8333,
-    x: 350,
-    y: 135,
     region: 'Northern Circuit',
     type: 'park',
-    description: 'Endless golden savannah plains, Great Migration resident predator territories, and granite kopjes.',
-    icon: 'bi-binoculars-fill'
+    description: 'Endless golden savannah plains, Great Migration resident predator territories, and granite kopjes.'
   },
   north_serengeti: {
     id: 'north_serengeti',
@@ -119,12 +92,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'North Serengeti',
     lat: -1.5667,
     lng: 34.8833,
-    x: 375,
-    y: 65,
     region: 'Northern Circuit',
     type: 'park',
-    description: 'Dramatic Mara River crossing corridor where wildebeest brave giant Nile crocodiles.',
-    icon: 'bi-water'
+    description: 'Dramatic Mara River crossing corridor where wildebeest brave giant Nile crocodiles.'
   },
   karatu: {
     id: 'karatu',
@@ -132,12 +102,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Karatu',
     lat: -3.3333,
     lng: 35.6667,
-    x: 470,
-    y: 180,
     region: 'Northern Circuit',
     type: 'park',
-    description: 'Lush agricultural highlands between Lake Manyara and Ngorongoro crater rim.',
-    icon: 'bi-cup-hot-fill'
+    description: 'Lush agricultural highlands between Lake Manyara and Ngorongoro crater rim.'
   },
   zanzibar: {
     id: 'zanzibar',
@@ -145,12 +112,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Zanzibar',
     lat: -6.1659,
     lng: 39.2026,
-    x: 775,
-    y: 385,
     region: 'Zanzibar & Coast',
     type: 'island',
-    description: 'Exotic Spice Island with UNESCO Stone Town, white sand beaches, and turquoise Indian Ocean reefs.',
-    icon: 'bi-sun-fill'
+    description: 'Exotic Spice Island with UNESCO Stone Town, white sand beaches, and turquoise Indian Ocean reefs.'
   },
   dar: {
     id: 'dar',
@@ -158,12 +122,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Dar es Salaam',
     lat: -6.7924,
     lng: 39.2083,
-    x: 745,
-    y: 435,
     region: 'Coast & Southern',
     type: 'gateway',
-    description: 'Coastal commercial capital and air departure hub for Southern Circuit safaris.',
-    icon: 'bi-airplane-fill'
+    description: 'Coastal commercial capital and air departure hub for Southern Circuit safaris.'
   },
   mikumi: {
     id: 'mikumi',
@@ -171,12 +132,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Mikumi',
     lat: -7.3833,
     lng: 37.0000,
-    x: 585,
-    y: 450,
     region: 'Southern Circuit',
     type: 'park',
-    description: 'Open Mkata floodplains often compared to Serengeti for easy predator and buffalo viewing.',
-    icon: 'bi-tree-fill'
+    description: 'Open Mkata floodplains often compared to Serengeti for easy predator and buffalo viewing.'
   },
   ruaha: {
     id: 'ruaha',
@@ -184,12 +142,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Ruaha',
     lat: -7.7000,
     lng: 34.9000,
-    x: 440,
-    y: 475,
     region: 'Southern Circuit',
     type: 'park',
-    description: 'Rugged, pristine wilderness with massive elephant populations and iconic greater kudu.',
-    icon: 'bi-flower1'
+    description: 'Rugged, pristine wilderness with massive elephant populations and iconic greater kudu.'
   },
   selous: {
     id: 'selous',
@@ -197,12 +152,9 @@ const allWaypoints: Record<string, WaypointDef> = {
     shortName: 'Nyerere (Selous)',
     lat: -8.5000,
     lng: 37.3333,
-    x: 650,
-    y: 520,
     region: 'Southern Circuit',
     type: 'park',
-    description: 'Africa’s largest wildlife refuge; famed for Rufiji River boat safaris and rare African wild dogs.',
-    icon: 'bi-water'
+    description: 'Africa’s largest wildlife refuge; famed for Rufiji River boat safaris and rare African wild dogs.'
   }
 };
 
@@ -270,18 +222,6 @@ const routeWaypoints = computed<WaypointDef[]>(() => {
   return result;
 });
 
-// SVG Path String for vector mode
-const routePathD = computed(() => {
-  if (routeWaypoints.value.length < 2) return '';
-  return routeWaypoints.value.reduce((acc, pt, index) => {
-    if (index === 0) return `M ${pt.x} ${pt.y}`;
-    const prev = routeWaypoints.value[index - 1];
-    const midX = (prev.x + pt.x) / 2;
-    const midY = (prev.y + pt.y) / 2 - 15;
-    return `${acc} Q ${midX} ${midY} ${pt.x} ${pt.y}`;
-  }, '');
-});
-
 // Initialize Leaflet Live Map with All Points and Polyline
 const initLeafletMap = async () => {
   if (typeof window === 'undefined' || !mapContainer.value) return;
@@ -302,7 +242,7 @@ const initLeafletMap = async () => {
     scrollWheelZoom: false
   });
 
-  // OpenStreetMap Topo / Outdoors base tile layer
+  // OpenStreetMap base tile layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -342,15 +282,15 @@ const initLeafletMap = async () => {
           ${index + 1}
         </div>
         <div style="
-          background-color: rgba(26,50,44,0.85);
+          background-color: rgba(26,50,44,0.88);
           color: #ffffff;
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 600;
-          padding: 2px 6px;
+          padding: 2px 7px;
           border-radius: 4px;
           white-space: nowrap;
           text-align: center;
-          margin-top: 2px;
+          margin-top: 3px;
           box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         ">
           ${pt.shortName}
@@ -364,7 +304,7 @@ const initLeafletMap = async () => {
 
     // Popup content with rich info
     marker.bindPopup(`
-      <div style="font-family: sans-serif; min-width: 200px;">
+      <div style="font-family: sans-serif; min-width: 210px;">
         <div style="color: #B19470; font-size: 11px; font-weight: 700; text-transform: uppercase;">
           Stop ${index + 1} • ${pt.region}
         </div>
@@ -396,22 +336,6 @@ const initLeafletMap = async () => {
   }
 };
 
-const handleViewChange = (view: 'satellite' | 'route') => {
-  activeView.value = view;
-  if (view === 'satellite') {
-    nextTick(() => {
-      if (!leafletMap) {
-        initLeafletMap();
-      } else {
-        leafletMap.invalidateSize();
-        if (currentPolyline) {
-          leafletMap.fitBounds(currentPolyline.getBounds(), { padding: [45, 45] });
-        }
-      }
-    });
-  }
-};
-
 onMounted(() => {
   nextTick(() => {
     initLeafletMap();
@@ -438,30 +362,13 @@ watch(() => props.destinations, () => {
           Geographic Itinerary & Route Map
         </h3>
       </div>
-
-      <!-- View Switcher -->
-      <div class="btn-group btn-group-sm" role="group" aria-label="Map view mode">
-        <button
-          type="button"
-          class="btn"
-          :class="activeView === 'satellite' ? 'btn-sc-primary' : 'btn-outline-secondary'"
-          @click="handleViewChange('satellite')"
-        >
-          <i class="bi bi-globe-americas me-1"></i> Live Interactive Terrain Map
-        </button>
-        <button
-          type="button"
-          class="btn"
-          :class="activeView === 'route' ? 'btn-sc-primary' : 'btn-outline-secondary'"
-          @click="handleViewChange('route')"
-        >
-          <i class="bi bi-compass me-1"></i> Expedition Chart
-        </button>
+      <div class="text-muted small">
+        <i class="bi bi-geo-alt-fill text-sc-gold me-1"></i> {{ circuit }}
       </div>
     </div>
 
-    <!-- Mode 1: Live Interactive Leaflet Terrain Map with Real Coordinates & All Points -->
-    <div v-show="activeView === 'satellite'" class="position-relative">
+    <!-- Live Interactive Leaflet Terrain Map with Real Coordinates & All Points -->
+    <div class="position-relative">
       <div
         ref="mapContainer"
         class="leaflet-map-element w-100"
@@ -489,251 +396,10 @@ watch(() => props.destinations, () => {
         </div>
       </div>
     </div>
-
-    <!-- Mode 2: Vector Editorial Expedition Map -->
-    <div v-show="activeView === 'route'" class="vector-map-wrapper position-relative p-2 p-md-4">
-      <svg
-        viewBox="0 0 900 650"
-        class="w-100 h-auto tanzania-svg-canvas"
-        style="max-height: 520px;"
-        role="img"
-        aria-label="Tanzania Safari Itinerary Route Map"
-      >
-        <rect width="900" height="650" fill="#F8FAE5" rx="16" />
-
-        <path
-          d="M 180,90 
-             Q 280,60 380,50 
-             Q 500,45 620,95 
-             Q 710,130 760,200 
-             Q 820,330 830,420 
-             Q 770,540 680,600 
-             Q 520,620 400,600 
-             Q 280,580 200,500 
-             Q 120,420 100,320 
-             Q 90,200 150,120 Z"
-          fill="#EEF2DB"
-          stroke="#D8DEBF"
-          stroke-width="2"
-        />
-
-        <path
-          d="M 190,60 Q 240,40 310,65 Q 280,130 210,130 Q 170,100 190,60 Z"
-          fill="#D6E9E6"
-          stroke="#B4D5D0"
-          stroke-width="1.5"
-        />
-        <text x="240" y="95" class="map-label-water">Lake Victoria</text>
-
-        <path
-          d="M 75,260 Q 95,360 120,490 Q 95,495 75,390 Q 60,300 75,260 Z"
-          fill="#D6E9E6"
-          stroke="#B4D5D0"
-          stroke-width="1.5"
-        />
-        <text x="95" y="375" class="map-label-water" transform="rotate(-75 95 375)">Lake Tanganyika</text>
-
-        <path
-          d="M 830,220 Q 860,360 850,560 L 900,560 L 900,220 Z"
-          fill="#E2EFF0"
-        />
-        <text x="830" y="310" class="map-label-water" transform="rotate(75 830 310)">Indian Ocean</text>
-
-        <path
-          d="M 280,70 Q 380,60 410,110 Q 380,180 300,165 Q 260,120 280,70 Z"
-          fill="#43766C"
-          fill-opacity="0.14"
-          stroke="#43766C"
-          stroke-width="1"
-          stroke-dasharray="4,3"
-        />
-        <text x="325" y="115" class="park-label">SERENGETI</text>
-
-        <circle
-          cx="440"
-          cy="160"
-          r="38"
-          fill="#43766C"
-          fill-opacity="0.16"
-          stroke="#43766C"
-          stroke-width="1"
-          stroke-dasharray="3,3"
-        />
-        <text x="440" y="145" class="park-label" text-anchor="middle">NGORONGORO</text>
-
-        <ellipse
-          cx="530"
-          cy="255"
-          rx="32"
-          ry="44"
-          fill="#43766C"
-          fill-opacity="0.14"
-          stroke="#43766C"
-          stroke-width="1"
-          stroke-dasharray="3,3"
-        />
-        <text x="530" y="275" class="park-label" text-anchor="middle">TARANGIRE</text>
-
-        <path
-          d="M 770,350 Q 785,360 782,410 Q 765,415 760,375 Z"
-          fill="#B19470"
-          fill-opacity="0.4"
-          stroke="#B19470"
-          stroke-width="1.5"
-        />
-        <text x="795" y="380" class="island-label">Zanzibar Island</text>
-
-        <path
-          v-if="routePathD"
-          :d="routePathD"
-          fill="none"
-          stroke="#B19470"
-          stroke-width="3.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-dasharray="8,6"
-          class="animated-route-path"
-        />
-
-        <g
-          v-for="(point, idx) in routeWaypoints"
-          :key="`${point.id}-${idx}`"
-          class="waypoint-group"
-          style="cursor: pointer;"
-          @click="selectedPoint = selectedPoint === point.id ? null : point.id"
-        >
-          <circle
-            :cx="point.x"
-            :cy="point.y"
-            r="16"
-            class="pulse-ring"
-            :class="selectedPoint === point.id ? 'ring-selected' : ''"
-          />
-
-          <circle
-            :cx="point.x"
-            :cy="point.y"
-            r="11"
-            :fill="point.type === 'gateway' ? '#76453B' : (point.type === 'mountain' ? '#B19470' : '#43766C')"
-            stroke="#ffffff"
-            stroke-width="2.5"
-            class="pin-circle"
-          />
-
-          <text
-            :cx="point.x"
-            :y="point.y + 4"
-            text-anchor="middle"
-            fill="#ffffff"
-            font-size="10"
-            font-weight="bold"
-            font-family="sans-serif"
-          >
-            {{ idx + 1 }}
-          </text>
-
-          <text
-            :x="point.x"
-            :y="point.y - 15"
-            text-anchor="middle"
-            class="waypoint-text"
-            :class="{ 'fw-bold': selectedPoint === point.id }"
-          >
-            {{ point.shortName }}
-          </text>
-        </g>
-      </svg>
-    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.vector-map-wrapper {
-  background-color: var(--sc-ivory);
-}
-
-.tanzania-svg-canvas {
-  filter: drop-shadow(0 4px 12px rgba(35, 39, 36, 0.04));
-}
-
-.map-label-water {
-  font-size: 11px;
-  fill: #7FA9A2;
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: 0.05em;
-  font-family: serif;
-}
-
-.park-label {
-  font-size: 9px;
-  fill: #43766C;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  opacity: 0.75;
-}
-
-.island-label {
-  font-size: 10px;
-  fill: #76453B;
-  font-weight: 600;
-}
-
-.waypoint-text {
-  font-size: 11px;
-  fill: #232724;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 -1px 2px rgba(255, 255, 255, 0.9);
-}
-
-.pin-circle {
-  transition: transform 0.2s ease;
-}
-
-.waypoint-group:hover .pin-circle {
-  transform: scale(1.2);
-  transform-origin: center;
-}
-
-.pulse-ring {
-  fill: none;
-  stroke: var(--sc-gold);
-  stroke-width: 1.5;
-  opacity: 0.6;
-  animation: pulse 2.5s infinite;
-}
-
-.ring-selected {
-  stroke: var(--sc-forest) !important;
-  stroke-width: 3 !important;
-  opacity: 1 !important;
-}
-
-@keyframes pulse {
-  0% {
-    r: 11;
-    opacity: 0.8;
-  }
-  70% {
-    r: 22;
-    opacity: 0;
-  }
-  100% {
-    r: 11;
-    opacity: 0;
-  }
-}
-
-.animated-route-path {
-  animation: dashAnimation 30s linear infinite;
-}
-
-@keyframes dashAnimation {
-  to {
-    stroke-dashoffset: -1000;
-  }
-}
-
 .legend-badge {
   width: 20px;
   height: 20px;
@@ -751,5 +417,10 @@ watch(() => props.destinations, () => {
   height: 3px;
   border-top: 3px dashed var(--sc-gold);
   display: inline-block;
+}
+
+:deep(.leaflet-custom-safari-pin) {
+  background: transparent;
+  border: none;
 }
 </style>

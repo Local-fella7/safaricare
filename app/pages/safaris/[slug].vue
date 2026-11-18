@@ -196,13 +196,6 @@ useSeoMeta({
               </div>
             </div>
 
-            <!-- Interactive Route & Circuit Map -->
-            <SafariRouteMap
-              :destinations="safari.destinations"
-              :circuit="safari.circuit"
-              :title="safari.title"
-            />
-
             <!-- Key Highlights -->
             <div v-if="safari.highlights && safari.highlights.length" class="mb-5">
               <h2 class="font-serif h4 fw-bold text-sc-forest mb-3">
@@ -237,6 +230,13 @@ useSeoMeta({
               </div>
               <ItineraryTimeline :days="safari.itinerary" />
             </div>
+
+            <!-- Interactive Geographic Itinerary & Route Map -->
+            <SafariRouteMap
+              :destinations="safari.destinations"
+              :circuit="safari.circuit"
+              :title="safari.title"
+            />
 
             <!-- Accommodation Standards & Camp Notes -->
             <div class="accommodation-notes-box bg-white p-4 rounded-4 shadow-sm mb-5 border border-light">
