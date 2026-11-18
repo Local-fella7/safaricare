@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const isMobileMenuOpen = ref(false)
 const isScrolled = ref(false)
+const activeDropdown = ref<string | null>(null)
 
 const handleScroll = () => {
   if (typeof window !== 'undefined') {
@@ -18,6 +19,14 @@ onUnmounted(() => {
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
+}
+
+const toggleDropdown = (name: string) => {
+  activeDropdown.value = activeDropdown.value === name ? null : name
+}
+
+const closeDropdown = () => {
+  activeDropdown.value = null
 }
 </script>
 
@@ -65,7 +74,7 @@ const closeMobileMenu = () => {
     >
       <div class="container">
         <!-- Brand Logo -->
-        <NuxtLink to="/" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none">
+        <NuxtLink to="/" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" @click="closeDropdown">
           <div class="brand-symbol bg-sc-forest text-white rounded-circle d-flex align-items-center justify-content-center">
             <i class="bi bi-compass"></i>
           </div>
@@ -78,33 +87,117 @@ const closeMobileMenu = () => {
         <!-- Desktop Navigation Links -->
         <div class="collapse navbar-collapse justify-content-center d-none d-lg-flex">
           <ul class="navbar-nav gap-lg-4 fw-medium">
-            <li class="nav-item">
-              <NuxtLink to="/safaris" class="nav-link" active-class="active">
-                Safaris
+            <!-- Safaris Dropdown -->
+            <li
+              class="nav-item position-relative"
+              @mouseenter="activeDropdown = 'safaris'"
+              @mouseleave="activeDropdown = null"
+            >
+              <NuxtLink
+                to="/safaris"
+                class="nav-link d-inline-flex align-items-center gap-1"
+                active-class="active"
+              >
+                <span>Safaris</span>
+                <i class="bi bi-chevron-down small" style="font-size: 0.75rem;"></i>
               </NuxtLink>
+
+              <!-- Dropdown Menu -->
+              <transition name="fade-down">
+                <div
+                  v-if="activeDropdown === 'safaris'"
+                  class="dropdown-menu-sc position-absolute bg-white shadow-lg rounded-3 p-3"
+                  style="width: 280px; top: 100%; left: 0;"
+                >
+                  <NuxtLink to="/safaris" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">All Safari Packages &rarr;</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Browse all tailor-made itineraries</div>
+                  </NuxtLink>
+                  <hr class="my-2" />
+                  <NuxtLink to="/safaris/6-day-northern-circuit-signature" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">6-Day Northern Circuit</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Tarangire, Serengeti, Ngorongoro</div>
+                  </NuxtLink>
+                  <NuxtLink to="/safaris/7-day-great-migration-safari" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">7-Day Great Migration</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Serengeti migration tracking</div>
+                  </NuxtLink>
+                  <NuxtLink to="/safaris/16-day-luxury-safari-and-zanzibar" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">16-Day Bush & Zanzibar Beach</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Ultimate wildlife and coast luxury</div>
+                  </NuxtLink>
+                  <NuxtLink to="/safaris/3-day-private-camping-adventure" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">3-Day Private Camping</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Authentic wilderness adventure</div>
+                  </NuxtLink>
+                </div>
+              </transition>
             </li>
-            <li class="nav-item">
-              <NuxtLink to="/destinations" class="nav-link" active-class="active">
-                Destinations
+
+            <!-- Destinations Dropdown -->
+            <li
+              class="nav-item position-relative"
+              @mouseenter="activeDropdown = 'destinations'"
+              @mouseleave="activeDropdown = null"
+            >
+              <NuxtLink
+                to="/destinations"
+                class="nav-link d-inline-flex align-items-center gap-1"
+                active-class="active"
+              >
+                <span>Destinations</span>
+                <i class="bi bi-chevron-down small" style="font-size: 0.75rem;"></i>
               </NuxtLink>
+
+              <!-- Dropdown Menu -->
+              <transition name="fade-down">
+                <div
+                  v-if="activeDropdown === 'destinations'"
+                  class="dropdown-menu-sc position-absolute bg-white shadow-lg rounded-3 p-3"
+                  style="width: 270px; top: 100%; left: 0;"
+                >
+                  <NuxtLink to="/destinations" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">All National Parks &rarr;</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Circuits overview & sanctuaries</div>
+                  </NuxtLink>
+                  <hr class="my-2" />
+                  <NuxtLink to="/destinations/serengeti-national-park" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">Serengeti National Park</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Endless plains & migration</div>
+                  </NuxtLink>
+                  <NuxtLink to="/destinations/ngorongoro-crater" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">Ngorongoro Conservation Area</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Volcanic caldera & Big Five</div>
+                  </NuxtLink>
+                  <NuxtLink to="/destinations/tarangire-national-park" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">Tarangire National Park</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Land of giants & baobabs</div>
+                  </NuxtLink>
+                  <NuxtLink to="/destinations/zanzibar-archipelago" class="dropdown-item-sc d-block p-2 rounded text-decoration-none" @click="closeDropdown">
+                    <div class="fw-bold text-sc-forest small">Zanzibar Archipelago</div>
+                    <div class="text-muted" style="font-size: 0.75rem;">Turquoise reefs & Stone Town</div>
+                  </NuxtLink>
+                </div>
+              </transition>
             </li>
+
             <li class="nav-item">
-              <NuxtLink to="/trekking" class="nav-link" active-class="active">
+              <NuxtLink to="/trekking" class="nav-link" active-class="active" @click="closeDropdown">
                 Trekking
               </NuxtLink>
             </li>
             <li class="nav-item">
-              <NuxtLink to="/travel-guide" class="nav-link" active-class="active">
+              <NuxtLink to="/travel-guide" class="nav-link" active-class="active" @click="closeDropdown">
                 Travel Guide
               </NuxtLink>
             </li>
             <li class="nav-item">
-              <NuxtLink to="/about-us" class="nav-link" active-class="active">
+              <NuxtLink to="/about-us" class="nav-link" active-class="active" @click="closeDropdown">
                 About Us
               </NuxtLink>
             </li>
             <li class="nav-item">
-              <NuxtLink to="/contact" class="nav-link" active-class="active">
+              <NuxtLink to="/contact" class="nav-link" active-class="active" @click="closeDropdown">
                 Contact
               </NuxtLink>
             </li>
@@ -287,6 +380,21 @@ const closeMobileMenu = () => {
   }
 }
 
+.dropdown-menu-sc {
+  border: 1px solid rgba(67, 118, 108, 0.15);
+  box-shadow: 0 12px 30px rgba(35, 39, 36, 0.12);
+  z-index: 1035;
+}
+
+.dropdown-item-sc {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: var(--sc-ivory);
+    transform: translateX(4px);
+  }
+}
+
 .hover-gold:hover {
   color: var(--sc-gold) !important;
 }
@@ -314,6 +422,17 @@ const closeMobileMenu = () => {
   &:hover, &.router-link-active {
     color: var(--sc-forest);
   }
+}
+
+.fade-down-enter-active,
+.fade-down-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fade-down-enter-from,
+.fade-down-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .slide-drawer-enter-active,
