@@ -382,25 +382,15 @@ useSeoMeta({
           </div>
 
           <!-- Right Column: Sticky Booking & Inquiry Card -->
-          <div class="col-lg-4 d-print-none">
+          <div class="col-lg-4">
             <div class="sticky-top" style="top: 110px;">
               <div class="card card-sc border-0 shadow-lg p-4 bg-white rounded-4">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="badge-sc-gold">100% Private Safari</span>
-                  <span class="badge bg-sc-forest bg-opacity-10 text-sc-forest small fw-bold">Direct Operator</span>
-                </div>
-
-                <h3 class="font-serif h4 fw-bold text-sc-forest mb-1">
+                <h3 class="font-serif h4 fw-bold text-sc-forest mb-2">
                   Tailor This Journey
                 </h3>
-                <p class="small text-muted mb-3">
+                <p class="small text-muted mb-4">
                   Every departure date, lodge category, and pacing can be customized to your party.
                 </p>
-
-                <div class="price-box p-3 rounded-3 bg-sc-ivory mb-4 border">
-                  <div class="small text-muted">Estimated Private Rate:</div>
-                  <div class="fw-bold text-sc-forest fs-6">{{ safari.priceNote }}</div>
-                </div>
 
                 <div class="d-flex flex-column gap-3">
                   <NuxtLink
@@ -458,7 +448,7 @@ useSeoMeta({
         </div>
 
         <!-- Related Itineraries Recommendations -->
-        <div v-if="relatedSafaris.length > 0" class="mt-5 pt-5 border-top d-print-none">
+        <div v-if="relatedSafaris.length > 0" class="mt-5 pt-5 border-top">
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
             <div>
               <span class="badge-sc-terracotta d-inline-block mb-2">Alternative Journeys</span>
