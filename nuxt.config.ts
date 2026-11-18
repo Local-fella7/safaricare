@@ -1,14 +1,26 @@
 import { fileURLToPath } from 'node:url';
 
+const sharedDir = fileURLToPath(new URL('./shared', import.meta.url));
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-18',
   devtools: { enabled: true },
 
   alias: {
-    '~/shared': fileURLToPath(new URL('./shared', import.meta.url)),
-    '~~/shared': fileURLToPath(new URL('./shared', import.meta.url)),
-    '@shared': fileURLToPath(new URL('./shared', import.meta.url))
+    '#shared': sharedDir,
+    '~~/shared': sharedDir,
+    '~/shared': sharedDir,
+    '@shared': sharedDir
+  },
+
+  nitro: {
+    alias: {
+      '#shared': sharedDir,
+      '~~/shared': sharedDir,
+      '~/shared': sharedDir,
+      '@shared': sharedDir
+    }
   },
 
   css: [

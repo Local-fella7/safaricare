@@ -1,4 +1,4 @@
-import type { SafariPackage } from '../../shared/types';
+import type { SafariPackage } from '#shared/types';
 
 export const safarisData: SafariPackage[] = [
   {

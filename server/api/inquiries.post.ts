@@ -1,4 +1,4 @@
-import { safariInquirySchema } from '../../shared/schemas/safariInquiry';
+import { safariInquirySchema } from '#shared/schemas/safariInquiry';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
