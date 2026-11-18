@@ -85,7 +85,7 @@ const allExpanded = computed(() => {
             @click="toggleDay(item.day)"
           >
             <div class="d-flex align-items-center gap-3">
-              <span class="badge bg-sc-forest bg-opacity-10 text-sc-forest px-2 py-1 small fw-bold">
+              <span class="day-badge px-2 py-1 rounded small fw-bold">
                 Day {{ item.day }}
               </span>
               <h3 class="font-serif fw-bold h6 text-sc-forest mb-0">
@@ -104,14 +104,14 @@ const allExpanded = computed(() => {
                 {{ item.description }}
               </p>
 
-              <div v-if="item.activities && item.activities.length" class="activities-tags d-flex flex-wrap gap-1 mb-3">
+              <div v-if="item.activities && item.activities.length" class="activities-tags d-flex flex-wrap gap-2 mb-3">
                 <span
                   v-for="(act, aIdx) in item.activities"
                   :key="aIdx"
-                  class="badge bg-sc-forest bg-opacity-10 text-sc-forest small fw-normal py-1 px-2"
+                  class="activity-tag d-inline-flex align-items-center gap-1 py-1 px-2 rounded-pill small"
                 >
-                  <i class="bi bi-tag-fill text-sc-gold me-1" style="font-size: 0.75rem;"></i>
-                  {{ act }}
+                  <i class="bi bi-tag-fill text-sc-gold" style="font-size: 0.75rem;"></i>
+                  <span>{{ act }}</span>
                 </span>
               </div>
 
@@ -180,5 +180,26 @@ const allExpanded = computed(() => {
 .accordion-slide-enter-from,
 .accordion-slide-leave-to {
   opacity: 0;
+}
+
+.day-badge {
+  background-color: var(--sc-forest-dark);
+  color: #ffffff;
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.activity-tag {
+  background-color: #EEF2DB;
+  border: 1px solid rgba(67, 118, 108, 0.28);
+  color: #1a322c;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  span {
+    color: #1a322c;
+  }
 }
 </style>
