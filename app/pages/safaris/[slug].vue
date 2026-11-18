@@ -189,9 +189,10 @@ useSeoMeta({
                 <span
                   v-for="d in safari.destinations"
                   :key="d"
-                  class="badge bg-sc-forest bg-opacity-10 text-sc-forest px-3 py-2 fs-6 fw-medium"
+                  class="destination-pill d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill shadow-sm"
                 >
-                  <i class="bi bi-geo-alt text-sc-gold me-1"></i> {{ d }}
+                  <i class="bi bi-geo-alt-fill text-sc-gold fs-6"></i>
+                  <span class="fw-semibold text-white">{{ d }}</span>
                 </span>
               </div>
             </div>
@@ -526,6 +527,19 @@ useSeoMeta({
   transition: transform 0.4s ease;
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+.destination-pill {
+  background-color: var(--sc-forest-dark);
+  border: 1px solid rgba(177, 148, 112, 0.45);
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(42, 77, 70, 0.35);
   }
 }
 </style>
