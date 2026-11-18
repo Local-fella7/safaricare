@@ -48,6 +48,11 @@ const handleClose = () => {
               </NuxtLink>
             </li>
             <li>
+              <NuxtLink to="/about-us" class="mobile-link" @click="handleClose">
+                <i class="bi bi-people me-2 text-sc-gold"></i> About Us
+              </NuxtLink>
+            </li>
+            <li>
               <NuxtLink to="/safaris" class="mobile-link" @click="handleClose">
                 <i class="bi bi-binoculars me-2 text-sc-gold"></i> Safari Packages
               </NuxtLink>
@@ -65,11 +70,6 @@ const handleClose = () => {
             <li>
               <NuxtLink to="/travel-guide" class="mobile-link" @click="handleClose">
                 <i class="bi bi-journal-bookmark me-2 text-sc-gold"></i> Travel Guide & FAQ
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/about-us" class="mobile-link" @click="handleClose">
-                <i class="bi bi-people me-2 text-sc-gold"></i> About Safari Care
               </NuxtLink>
             </li>
             <li>

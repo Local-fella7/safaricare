@@ -89,6 +89,13 @@ const closeDropdown = () => {
         <!-- Desktop Navigation Links -->
         <div class="collapse navbar-collapse justify-content-center d-none d-lg-flex">
           <ul class="navbar-nav gap-lg-4 fw-medium">
+            <!-- About Us -->
+            <li class="nav-item">
+              <NuxtLink to="/about-us" class="nav-link" active-class="active" @click="closeDropdown">
+                About Us
+              </NuxtLink>
+            </li>
+
             <!-- Safaris Dropdown -->
             <li
               class="nav-item position-relative"
@@ -191,11 +198,6 @@ const closeDropdown = () => {
             <li class="nav-item">
               <NuxtLink to="/travel-guide" class="nav-link" active-class="active" @click="closeDropdown">
                 Travel Guide
-              </NuxtLink>
-            </li>
-            <li class="nav-item">
-              <NuxtLink to="/about-us" class="nav-link" active-class="active" @click="closeDropdown">
-                About Us
               </NuxtLink>
             </li>
             <li class="nav-item">
