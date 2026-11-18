@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import ItineraryTimeline from '~/components/safari/ItineraryTimeline.vue';
+import SafariCard from '~/components/safari/SafariCard.vue';
 import type { SafariPackage } from '~/shared/types';
 
 const route = useRoute();
 const slug = computed(() => String(route.params.slug));
 
 const { data: safari, error, status } = await useFetch<SafariPackage>(() => `/api/safaris/${slug.value}`);
+
+// Fetch all safaris to show related recommendations
+const { data: allSafaris } = await useFetch<SafariPackage[]>('/api/safaris');
+
+const relatedSafaris = computed(() => {
+  if (!allSafaris.value || !safari.value) return [];
+  return allSafaris.value
+    .filter((s) => s.slug !== safari.value?.slug)
+    .filter((s) => s.circuit === safari.value?.circuit || s.travelStyle === safari.value?.travelStyle)
+    .slice(0, 3);
+});
 
 useSeoMeta({
   title: () => safari.value ? `${safari.value.title} | Safari Care Tanzania` : 'Safari Package | Safari Care',
@@ -53,6 +65,7 @@ useSeoMeta({
             :src="safari.heroImage"
             :alt="safari.title"
             class="w-100 h-100 object-fit-cover"
+            fetchpriority="high"
           />
           <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
         </div>
@@ -98,7 +111,7 @@ useSeoMeta({
       <!-- Main Content Layout -->
       <div class="container py-5">
         <div class="row g-5">
-          <!-- Left Column: Itinerary Details -->
+          <!-- Left Column: Itinerary Details & Gallery -->
           <div class="col-lg-8">
             <!-- Destinations Visited Strip -->
             <div class="destinations-strip bg-white p-4 rounded-4 shadow-sm mb-5 border border-light">
@@ -138,12 +151,43 @@ useSeoMeta({
             <!-- Day by Day Itinerary -->
             <div class="mb-5">
               <div class="d-flex align-items-center justify-content-between mb-4">
-                <h2 class="font-serif h4 fw-bold text-sc-forest mb-0">
-                  Day-by-Day Itinerary
-                </h2>
-                <span class="badge-sc-terracotta">{{ safari.durationDays }} Days Detailed Plan</span>
+                <div>
+                  <span class="badge-sc-terracotta d-inline-block mb-1">Route & Schedule</span>
+                  <h2 class="font-serif h4 fw-bold text-sc-forest mb-0">
+                    Day-by-Day Itinerary
+                  </h2>
+                </div>
+                <span class="badge bg-sc-forest text-white py-2 px-3 fw-semibold">
+                  {{ safari.durationDays }} Days Total
+                </span>
               </div>
               <ItineraryTimeline :days="safari.itinerary" />
+            </div>
+
+            <!-- Photo Gallery Preview -->
+            <div v-if="safari.gallery && safari.gallery.length" class="mb-5">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="font-serif h4 fw-bold text-sc-forest mb-0">
+                  Experience Gallery
+                </h2>
+                <span class="small text-muted">{{ safari.gallery.length }} scenic snapshots</span>
+              </div>
+              <div class="row g-3">
+                <div
+                  v-for="(photo, idx) in safari.gallery"
+                  :key="idx"
+                  class="col-4"
+                >
+                  <div class="gallery-frame rounded-3 overflow-hidden shadow-sm" style="height: 180px;">
+                    <img
+                      :src="photo"
+                      :alt="`${safari.title} preview ${idx + 1}`"
+                      class="w-100 h-100 object-fit-cover gallery-img"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Inclusions & Exclusions -->
@@ -192,22 +236,26 @@ useSeoMeta({
           <div class="col-lg-4">
             <div class="sticky-top" style="top: 110px;">
               <div class="card card-sc border-0 shadow-lg p-4 bg-white rounded-4">
-                <span class="badge-sc-gold align-self-start mb-2">100% Private Safari</span>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="badge-sc-gold">100% Private Safari</span>
+                  <span class="badge bg-sc-forest bg-opacity-10 text-sc-forest small fw-bold">Direct Operator</span>
+                </div>
+
                 <h3 class="font-serif h4 fw-bold text-sc-forest mb-1">
                   Tailor This Journey
                 </h3>
                 <p class="small text-muted mb-3">
-                  Pricing depends on season, party size, and lodge level.
+                  Every departure date, lodge category, and pacing can be customized to your party.
                 </p>
 
                 <div class="price-box p-3 rounded-3 bg-sc-ivory mb-4 border">
                   <div class="small text-muted">Estimated Private Rate:</div>
-                  <div class="fw-bold text-sc-forest fs-5">{{ safari.priceNote }}</div>
+                  <div class="fw-bold text-sc-forest fs-6">{{ safari.priceNote }}</div>
                 </div>
 
                 <div class="d-flex flex-column gap-3">
                   <NuxtLink
-                    :to="{ path: '/plan-your-safari', query: { safari: safari.slug, style: safari.travelStyle } }"
+                    :to="{ path: '/plan-your-safari', query: { safari: safari.slug, style: safari.travelStyle, duration: safari.durationDays } }"
                     class="btn btn-sc-gold btn-lg w-100 py-3 text-white fw-bold shadow-sm"
                   >
                     <i class="bi bi-calendar-check me-2"></i>
@@ -225,8 +273,25 @@ useSeoMeta({
                   </a>
                 </div>
 
+                <!-- Trust Points -->
                 <div class="pt-4 mt-4 border-top">
-                  <div class="fw-bold small text-sc-forest mb-2">Direct Expert Contact:</div>
+                  <div class="fw-bold small text-sc-forest mb-2">Safari Care Guarantee:</div>
+                  <ul class="list-unstyled small text-muted d-flex flex-column gap-2 mb-3">
+                    <li class="d-flex align-items-center gap-2">
+                      <i class="bi bi-check-circle-fill text-sc-forest"></i>
+                      <span>Guaranteed window seat & private 4x4</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                      <i class="bi bi-check-circle-fill text-sc-forest"></i>
+                      <span>AMREF Flying Doctors included</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                      <i class="bi bi-check-circle-fill text-sc-forest"></i>
+                      <span>Free flexible itinerary revisions</span>
+                    </li>
+                  </ul>
+
+                  <div class="fw-bold small text-sc-forest mb-2">Direct Arusha Office:</div>
                   <div class="d-flex flex-column gap-2 small text-muted">
                     <div>
                       <i class="bi bi-telephone-fill text-sc-gold me-2"></i>
@@ -236,13 +301,35 @@ useSeoMeta({
                       <i class="bi bi-envelope-fill text-sc-gold me-2"></i>
                       <span>info@safaricare.com</span>
                     </div>
-                    <div>
-                      <i class="bi bi-geo-alt-fill text-sc-gold me-2"></i>
-                      <span>Arusha, Tanzania</span>
-                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Itineraries Recommendations -->
+        <div v-if="relatedSafaris.length > 0" class="mt-5 pt-5 border-top">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+            <div>
+              <span class="badge-sc-terracotta d-inline-block mb-2">Alternative Journeys</span>
+              <h2 class="font-serif fw-bold text-sc-forest display-6 mb-0">
+                You May Also Consider
+              </h2>
+            </div>
+            <NuxtLink to="/safaris" class="btn btn-sc-outline-forest mt-3 mt-md-0">
+              <span>View All Safaris</span>
+              <i class="bi bi-arrow-right ms-2"></i>
+            </NuxtLink>
+          </div>
+
+          <div class="row g-4">
+            <div
+              v-for="relSafari in relatedSafaris"
+              :key="relSafari.slug"
+              class="col-md-6 col-lg-4"
+            >
+              <SafariCard :safari="relSafari" />
             </div>
           </div>
         </div>
@@ -285,5 +372,12 @@ useSeoMeta({
 
 .text-shadow-sm {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-img {
+  transition: transform 0.4s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 </style>
