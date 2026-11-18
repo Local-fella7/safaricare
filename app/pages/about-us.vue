@@ -46,9 +46,9 @@ const values = [
       <!-- Page Intro -->
       <div class="row align-items-center g-5 mb-5">
         <div class="col-lg-6">
-          <span class="badge-sc-terracotta d-inline-block mb-2">Our Story</span>
+          <span class="badge-sc-terracotta d-inline-block mb-2">Passionate About Tanzania &amp; Conservation</span>
           <h1 class="font-serif fw-bold text-sc-forest display-5 mb-3">
-            Born in Arusha. Guided by Passion.
+            Extraordinary Journeys. Authentic Tanzanian Hospitality.
           </h1>
           <p class="lead text-muted fs-6 mb-3">
             Safari Care was founded with a singular, resolute mission: to showcase the untamed beauty of Tanzania with warmth, unrivaled local expertise, and an unwavering respect for African wilderness.
