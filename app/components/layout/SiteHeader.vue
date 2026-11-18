@@ -1,0 +1,328 @@
+<script setup lang="ts">
+const isMobileMenuOpen = ref(false)
+const isScrolled = ref(false)
+
+const handleScroll = () => {
+  if (typeof window !== 'undefined') {
+    isScrolled.value = window.scrollY > 30
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
+</script>
+
+<template>
+  <header class="site-header-wrapper fixed-top">
+    <!-- Top Micro Announcement Bar -->
+    <div class="top-announcement-bar py-1 d-none d-md-block">
+      <div class="container d-flex justify-content-between align-items-center text-white small">
+        <div class="d-flex align-items-center gap-3">
+          <span>
+            <i class="bi bi-geo-alt-fill text-sc-gold me-1"></i>
+            Arusha, Tanzania
+          </span>
+          <span>
+            <i class="bi bi-shield-check text-sc-gold me-1"></i>
+            Licensed Tanzanian Safari Operator
+          </span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <a
+            href="https://wa.me/255700000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-white text-decoration-none d-inline-flex align-items-center gap-1 hover-gold"
+          >
+            <i class="bi bi-whatsapp text-success"></i>
+            <span>Chat on WhatsApp</span>
+          </a>
+          <span class="opacity-50">|</span>
+          <a
+            href="mailto:info@safaricare.com"
+            class="text-white text-decoration-none d-inline-flex align-items-center gap-1 hover-gold"
+          >
+            <i class="bi bi-envelope text-sc-gold"></i>
+            <span>info@safaricare.com</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav
+      class="navbar navbar-expand-lg transition-all"
+      :class="isScrolled ? 'navbar-scrolled shadow-sm py-2' : 'navbar-transparent py-3'"
+    >
+      <div class="container">
+        <!-- Brand Logo -->
+        <NuxtLink to="/" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none">
+          <div class="brand-symbol bg-sc-forest text-white rounded-circle d-flex align-items-center justify-content-center">
+            <i class="bi bi-compass"></i>
+          </div>
+          <div class="d-flex flex-column">
+            <span class="brand-title font-serif fw-bold">SAFARI CARE</span>
+            <span class="brand-subtitle text-uppercase">Tanzania Wilderness</span>
+          </div>
+        </NuxtLink>
+
+        <!-- Desktop Navigation Links -->
+        <div class="collapse navbar-collapse justify-content-center d-none d-lg-flex">
+          <ul class="navbar-nav gap-lg-4 fw-medium">
+            <li class="nav-item">
+              <NuxtLink to="/safaris" class="nav-link" active-class="active">
+                Safaris
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
+              <NuxtLink to="/destinations" class="nav-link" active-class="active">
+                Destinations
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
+              <NuxtLink to="/trekking" class="nav-link" active-class="active">
+                Trekking
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
+              <NuxtLink to="/travel-guide" class="nav-link" active-class="active">
+                Travel Guide
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
+              <NuxtLink to="/about-us" class="nav-link" active-class="active">
+                About Us
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
+              <NuxtLink to="/contact" class="nav-link" active-class="active">
+                Contact
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Action CTA & Mobile Toggle -->
+        <div class="d-flex align-items-center gap-2 gap-sm-3">
+          <NuxtLink to="/plan-your-safari" class="btn btn-sc-gold btn-sm px-3 px-md-4 py-2 text-white">
+            <i class="bi bi-calendar-check me-1 d-none d-sm-inline"></i>
+            <span>Plan My Safari</span>
+          </NuxtLink>
+
+          <button
+            class="btn btn-sc-outline-forest d-lg-none p-2 lh-1"
+            type="button"
+            aria-label="Toggle navigation menu"
+            @click="isMobileMenuOpen = !isMobileMenuOpen"
+          >
+            <i class="bi" :class="isMobileMenuOpen ? 'bi-x-lg' : 'bi-list'" style="font-size: 1.4rem;"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Offcanvas Drawer (Native Vue Reactive) -->
+    <div
+      v-if="isMobileMenuOpen"
+      class="mobile-backdrop position-fixed top-0 start-0 w-100 h-100"
+      @click="closeMobileMenu"
+    ></div>
+
+    <transition name="slide-drawer">
+      <div
+        v-if="isMobileMenuOpen"
+        class="mobile-drawer position-fixed top-0 end-0 h-100 bg-white shadow-lg d-flex flex-column z-index-modal p-4"
+      >
+        <div class="d-flex justify-content-between align-items-center pb-3 border-bottom">
+          <NuxtLink to="/" class="text-decoration-none" @click="closeMobileMenu">
+            <div class="brand-title font-serif fw-bold text-sc-forest fs-4">SAFARI CARE</div>
+            <div class="brand-subtitle text-uppercase text-muted small">Tanzania Specialists</div>
+          </NuxtLink>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            @click="closeMobileMenu"
+          ></button>
+        </div>
+
+        <nav class="mobile-nav-list my-4 flex-grow-1 overflow-auto">
+          <ul class="list-unstyled d-flex flex-column gap-3 fs-5">
+            <li>
+              <NuxtLink to="/" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-house me-2 text-sc-gold"></i> Home
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/safaris" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-binoculars me-2 text-sc-gold"></i> Safari Packages
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/destinations" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-map me-2 text-sc-gold"></i> Destinations
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/trekking" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-triangle me-2 text-sc-gold"></i> Kilimanjaro Trekking
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/travel-guide" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-journal-bookmark me-2 text-sc-gold"></i> Travel Guide & FAQ
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/about-us" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-people me-2 text-sc-gold"></i> About Safari Care
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/contact" class="mobile-link" @click="closeMobileMenu">
+                <i class="bi bi-chat-dots me-2 text-sc-gold"></i> Contact & Inquiries
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="mobile-drawer-footer pt-3 border-top d-flex flex-column gap-2">
+          <NuxtLink
+            to="/plan-your-safari"
+            class="btn btn-sc-primary w-100 py-2 text-white"
+            @click="closeMobileMenu"
+          >
+            <i class="bi bi-calendar-check me-2"></i> Custom Safari Planner
+          </NuxtLink>
+          <a
+            href="https://wa.me/255700000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline-success w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+          >
+            <i class="bi bi-whatsapp"></i> Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </transition>
+  </header>
+</template>
+
+<style scoped lang="scss">
+.site-header-wrapper {
+  z-index: 1030;
+}
+
+.top-announcement-bar {
+  background-color: var(--sc-forest-dark);
+  font-size: 0.825rem;
+  letter-spacing: 0.02em;
+}
+
+.navbar {
+  transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-transparent {
+  background-color: rgba(248, 250, 229, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.navbar-scrolled {
+  background-color: rgba(248, 250, 229, 0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(67, 118, 108, 0.12);
+}
+
+.brand-symbol {
+  width: 40px;
+  height: 40px;
+  font-size: 1.25rem;
+  background-color: var(--sc-forest);
+}
+
+.brand-title {
+  color: var(--sc-forest);
+  font-size: 1.35rem;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  color: var(--sc-gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.nav-link {
+  color: var(--sc-charcoal);
+  font-size: 0.975rem;
+  position: relative;
+  transition: color 0.2s ease;
+  padding: 0.5rem 0;
+
+  &:hover, &.active {
+    color: var(--sc-forest);
+  }
+
+  &.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--sc-forest);
+    border-radius: 2px;
+  }
+}
+
+.hover-gold:hover {
+  color: var(--sc-gold) !important;
+}
+
+.mobile-backdrop {
+  background: rgba(35, 39, 36, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1040;
+}
+
+.mobile-drawer {
+  width: 85%;
+  max-width: 380px;
+  z-index: 1050;
+}
+
+.mobile-link {
+  color: var(--sc-charcoal);
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+  font-weight: 500;
+  transition: color 0.2s ease;
+
+  &:hover, &.router-link-active {
+    color: var(--sc-forest);
+  }
+}
+
+.slide-drawer-enter-active,
+.slide-drawer-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-drawer-enter-from,
+.slide-drawer-leave-to {
+  transform: translateX(100%);
+}
+</style>
