@@ -10,7 +10,7 @@
         src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=2000&q=85"
         alt="Tanzanian Serengeti Savannah Wildlife Safari"
         class="w-100 h-100 object-fit-cover hero-img"
-        priority
+        fetchpriority="high"
       />
       <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
     </div>
