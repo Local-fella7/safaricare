@@ -35,7 +35,8 @@ const travelStyles = [
   { label: 'Wildlife Migration', value: 'migration' },
   { label: 'Private Camping', value: 'camping' },
   { label: 'Adventure', value: 'adventure' },
-  { label: 'Honeymoon', value: 'honeymoon' }
+  { label: 'Honeymoon', value: 'honeymoon' },
+  { label: 'Photographic', value: 'photographic' }
 ];
 
 const durations = [
@@ -44,6 +45,66 @@ const durations = [
   { label: 'Medium (5–8 Days)', value: 'medium' },
   { label: 'Extended (9+ Days)', value: 'long' }
 ];
+
+type SafariFilterState = { circuit: string; duration: string; style: string; search: string };
+
+const currentSafariState = (): SafariFilterState => ({
+  circuit: selectedCircuit.value,
+  duration: selectedDuration.value,
+  style: selectedStyle.value,
+  search: searchQuery.value
+});
+
+const matchesSafari = (safari: SafariPackage, state: SafariFilterState): boolean => {
+  if (state.search.trim() !== '') {
+    const q = state.search.toLowerCase().trim();
+    const inTitle = safari.title.toLowerCase().includes(q);
+    const inSummary = safari.summary.toLowerCase().includes(q);
+    const inDest = safari.destinations.some((d) => d.toLowerCase().includes(q));
+    if (!inTitle && !inSummary && !inDest) return false;
+  }
+
+  if (state.circuit !== 'all') {
+    const target = state.circuit.toLowerCase();
+    const match = safari.circuit.toLowerCase().includes(target) ||
+                  safari.title.toLowerCase().includes(target) ||
+                  safari.destinations.some((d) => d.toLowerCase().includes(target));
+    if (!match) return false;
+  }
+
+  if (state.style !== 'all') {
+    const target = state.style.toLowerCase();
+    const match = safari.travelStyle.toLowerCase().includes(target) ||
+                  safari.title.toLowerCase().includes(target);
+    if (!match) return false;
+  }
+
+  if (state.duration === 'short' && safari.durationDays > 4) return false;
+  if (state.duration === 'medium' && (safari.durationDays < 5 || safari.durationDays > 8)) return false;
+  if (state.duration === 'long' && safari.durationDays < 9) return false;
+
+  return true;
+};
+
+const countFor = (key: 'circuit' | 'duration' | 'style', value: string): number => {
+  const state = currentSafariState();
+  state[key] = value;
+  return (allSafaris.value ?? []).filter((safari) => matchesSafari(safari, state)).length;
+};
+
+const circuitOptions = computed(() => circuits.map((c) => ({ ...c, count: countFor('circuit', c.value) })));
+const styleOptions = computed(() => travelStyles.map((s) => ({ ...s, count: countFor('style', s.value) })));
+const durationOptions = computed(() => durations.map((d) => ({ ...d, count: countFor('duration', d.value) })));
+
+const filteredSafaris = computed(() =>
+  (allSafaris.value ?? []).filter((safari) => matchesSafari(safari, currentSafariState()))
+);
+
+watch([allSafaris, selectedCircuit, selectedDuration, selectedStyle, searchQuery], () => {
+  if (selectedCircuit.value !== 'all' && countFor('circuit', selectedCircuit.value) === 0) selectedCircuit.value = 'all';
+  if (selectedDuration.value !== 'all' && countFor('duration', selectedDuration.value) === 0) selectedDuration.value = 'all';
+  if (selectedStyle.value !== 'all' && countFor('style', selectedStyle.value) === 0) selectedStyle.value = 'all';
+}, { immediate: true });
 
 // Watch for filter changes and update URL query cleanly
 watch([selectedCircuit, selectedDuration, selectedStyle], ([circuit, duration, style]) => {
@@ -81,43 +142,6 @@ const hasActiveFilters = computed(() => {
          searchQuery.value.trim() !== '';
 });
 
-const filteredSafaris = computed(() => {
-  if (!allSafaris.value) return [];
-  return allSafaris.value.filter((s) => {
-    // Search query filter (title, summary, destinations)
-    if (searchQuery.value.trim() !== '') {
-      const q = searchQuery.value.toLowerCase().trim();
-      const inTitle = s.title.toLowerCase().includes(q);
-      const inSummary = s.summary.toLowerCase().includes(q);
-      const inDest = s.destinations.some((d) => d.toLowerCase().includes(q));
-      if (!inTitle && !inSummary && !inDest) return false;
-    }
-
-    // Circuit filter
-    if (selectedCircuit.value !== 'all') {
-      const target = selectedCircuit.value.toLowerCase();
-      const match = s.circuit.toLowerCase().includes(target) ||
-                    s.title.toLowerCase().includes(target) ||
-                    s.destinations.some((d) => d.toLowerCase().includes(target));
-      if (!match) return false;
-    }
-
-    // Travel style filter
-    if (selectedStyle.value !== 'all') {
-      const target = selectedStyle.value.toLowerCase();
-      const match = s.travelStyle.toLowerCase().includes(target) ||
-                    s.title.toLowerCase().includes(target);
-      if (!match) return false;
-    }
-
-    // Duration filter
-    if (selectedDuration.value === 'short' && s.durationDays > 4) return false;
-    if (selectedDuration.value === 'medium' && (s.durationDays < 5 || s.durationDays > 8)) return false;
-    if (selectedDuration.value === 'long' && s.durationDays < 9) return false;
-
-    return true;
-  });
-});
 </script>
 
 <template>
@@ -144,11 +168,15 @@ const filteredSafaris = computed(() => {
             </label>
             <div class="d-flex flex-wrap gap-2">
               <button
-                v-for="c in circuits"
+                v-for="c in circuitOptions"
                 :key="c.value"
                 type="button"
                 class="btn btn-sm"
-                :class="selectedCircuit === c.value ? 'btn-sc-primary' : 'btn-outline-secondary'"
+                :class="[
+                  selectedCircuit === c.value ? 'btn-sc-primary' : 'btn-outline-secondary',
+                  c.count === 0 ? 'opacity-25' : ''
+                ]"
+                :disabled="c.count === 0"
                 @click="selectedCircuit = c.value"
               >
                 {{ c.label }}
@@ -163,11 +191,15 @@ const filteredSafaris = computed(() => {
             </label>
             <div class="d-flex flex-wrap gap-2">
               <button
-                v-for="style in travelStyles"
+                v-for="style in styleOptions"
                 :key="style.value"
                 type="button"
                 class="btn btn-sm"
-                :class="selectedStyle === style.value ? 'btn-sc-gold' : 'btn-outline-secondary'"
+                :class="[
+                  selectedStyle === style.value ? 'btn-sc-gold' : 'btn-outline-secondary',
+                  style.count === 0 ? 'opacity-25' : ''
+                ]"
+                :disabled="style.count === 0"
                 @click="selectedStyle = style.value"
               >
                 {{ style.label }}
@@ -182,11 +214,15 @@ const filteredSafaris = computed(() => {
             </label>
             <div class="d-flex flex-wrap gap-2 mb-3">
               <button
-                v-for="d in durations"
+                v-for="d in durationOptions"
                 :key="d.value"
                 type="button"
                 class="btn btn-sm"
-                :class="selectedDuration === d.value ? 'btn-sc-primary' : 'btn-outline-secondary'"
+                :class="[
+                  selectedDuration === d.value ? 'btn-sc-primary' : 'btn-outline-secondary',
+                  d.count === 0 ? 'opacity-25' : ''
+                ]"
+                :disabled="d.count === 0"
                 @click="selectedDuration = d.value"
               >
                 {{ d.label }}

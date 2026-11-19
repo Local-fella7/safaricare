@@ -1,8 +1,23 @@
-import { safariInquirySchema } from '#shared/schemas/safariInquiry';
+import { safariInquirySchema } from '../../shared/schemas/safariInquiry';
+import { sanitizeObject } from '../../shared/utils/sanitize';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const result = safariInquirySchema.safeParse(body);
+
+  // Sanitize all string inputs to prevent XSS before validation.
+  const sanitizedBody = sanitizeObject(body as Record<string, unknown>);
+
+  // Honeypot check: if the hidden website field is filled, silently reject.
+  // Do not reveal which field triggered rejection to avoid tipping off bots.
+  if (sanitizedBody.website && String(sanitizedBody.website).trim() !== '') {
+    return {
+      ok: true,
+      received: true,
+      message: 'Thank you! Your inquiry has been received.'
+    };
+  }
+
+  const result = safariInquirySchema.safeParse(sanitizedBody);
 
   if (!result.success) {
     throw createError({

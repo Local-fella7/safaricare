@@ -25,7 +25,7 @@ interface WaypointDef {
   description: string;
 }
 
-const allWaypoints: Record<string, WaypointDef> = {
+const allWaypoints = {
   arusha: {
     id: 'arusha',
     name: 'Arusha Town & Staging Base',
@@ -156,7 +156,7 @@ const allWaypoints: Record<string, WaypointDef> = {
     type: 'park',
     description: 'Africa’s largest wildlife refuge; famed for Rufiji River boat safaris and rare African wild dogs.'
   }
-};
+} satisfies Record<string, WaypointDef>;
 
 // Map package destinations into matched waypoint objects in sequential order
 const routeWaypoints = computed<WaypointDef[]>(() => {
