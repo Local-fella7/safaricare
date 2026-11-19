@@ -16,18 +16,6 @@
                 class="w-100 object-fit-cover main-img"
               />
             </div>
-            <!-- Floating Badge Card -->
-            <div class="floating-badge-card bg-sc-forest text-white p-3 p-md-4 rounded-3 shadow-lg position-absolute bottom-0 start-0 mb-n3 ms-n2 ms-md-n4">
-              <div class="d-flex align-items-center gap-3">
-                <div class="fs-1 text-sc-gold">
-                  <i class="bi bi-shield-shaded"></i>
-                </div>
-                <div>
-                  <div class="font-serif fw-bold h5 mb-0">Born in Arusha</div>
-                  <div class="small text-white-50">Local Tanzanian safari operator</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -95,10 +83,5 @@
 
 .main-img {
   height: 100%;
-}
-
-.floating-badge-card {
-  max-width: 320px;
-  background-color: var(--sc-forest) !important;
 }
 </style>
