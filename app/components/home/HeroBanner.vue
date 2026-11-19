@@ -19,12 +19,6 @@
     <div class="container position-relative z-index-1 py-lg-5 my-3 my-md-5">
       <div class="row align-items-center">
         <div class="col-lg-9 col-xl-8">
-          <!-- Top Badge -->
-          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-white bg-opacity-15 backdrop-blur text-white small mb-3 border border-white border-opacity-25">
-            <span class="badge bg-sc-gold text-white rounded-pill px-2 py-1">Direct from Arusha</span>
-            <span>Tailor-Made Tanzanian Expeditions</span>
-          </div>
-
           <!-- Hero Headline -->
           <h1 class="display-3 font-serif fw-bold text-white mb-3 text-shadow lh-sm">
             Extraordinary Journeys. <br class="d-none d-sm-inline" />
