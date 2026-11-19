@@ -36,7 +36,7 @@ useSeoMeta({
           <!-- Contact Cards -->
           <div class="d-flex flex-column gap-3 mb-4">
             <div class="card p-3 rounded-3 bg-white border-0 shadow-sm d-flex flex-row align-items-center gap-3">
-              <div class="icon-box bg-sc-forest bg-opacity-10 text-sc-forest rounded-circle p-3 fs-4">
+              <div class="icon-box bg-sc-forest text-white rounded-circle p-3 fs-4 shadow-sm">
                 <i class="bi bi-geo-alt-fill"></i>
               </div>
               <div>
@@ -46,7 +46,7 @@ useSeoMeta({
             </div>
 
             <div class="card p-3 rounded-3 bg-white border-0 shadow-sm d-flex flex-row align-items-center gap-3">
-              <div class="icon-box bg-sc-gold bg-opacity-15 text-sc-gold rounded-circle p-3 fs-4">
+              <div class="icon-box bg-sc-gold text-white rounded-circle p-3 fs-4 shadow-sm">
                 <i class="bi bi-envelope-fill"></i>
               </div>
               <div>
@@ -72,7 +72,7 @@ useSeoMeta({
             </div>
 
             <div class="card p-3 rounded-3 bg-white border-0 shadow-sm d-flex flex-row align-items-center gap-3">
-              <div class="icon-box bg-sc-forest bg-opacity-10 text-sc-forest rounded-circle p-3 fs-4">
+              <div class="icon-box bg-sc-forest text-white rounded-circle p-3 fs-4 shadow-sm">
                 <i class="bi bi-clock-fill"></i>
               </div>
               <div>

@@ -1,4 +1,4 @@
-import { safariInquirySchema } from '~~/shared/schemas/safariInquiry';
+import { safariInquirySchema } from '#shared/schemas/safariInquiry';
 
 export function useSafariInquiry() {
   const isSubmitting = ref(false);

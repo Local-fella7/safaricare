@@ -71,7 +71,7 @@ defineProps<{
       <div class="card-actions pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
         <div>
           <span class="d-block text-muted" style="font-size: 0.75rem;">Private Journey</span>
-          <span class="fw-bold text-sc-forest small">{{ safari.priceNote.split('(')[0] }}</span>
+          <span class="fw-bold text-sc-forest small">{{ (safari.priceNote || 'Tailor-made').split('(')[0] }}</span>
         </div>
         <NuxtLink :to="`/safaris/${safari.slug}`" class="btn btn-sc-primary btn-sm px-3 py-2">
           View Itinerary &rarr;

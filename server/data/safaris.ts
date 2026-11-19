@@ -1,4 +1,4 @@
-import type { SafariPackage } from '../../shared/types';
+import type { SafariPackage } from '#shared/types';
 
 export const safarisData: SafariPackage[] = [
   {
@@ -627,6 +627,246 @@ export const safarisData: SafariPackage[] = [
     ],
     seoTitle: '13-Day Kilimanjaro Climb and Wildlife Safari | Safari Care',
     seoDescription: 'Conquer Mount Kilimanjaro via the Machame Route then unwind with a luxury wildlife safari in Serengeti and Ngorongoro.',
+    status: 'published'
+  },
+  {
+    slug: '9-day-northern-circuit-in-depth',
+    title: '9-Day In-Depth Northern Circuit Explorer',
+    durationDays: 9,
+    circuit: 'Northern Circuit',
+    travelStyle: 'Luxury Lodge',
+    featured: true,
+    summary: 'The ultimate comprehensive exploration of Northern Tanzania: Tarangire baobabs, Lake Manyara groundwater forest, three full days in Serengeti, and the primeval Ngorongoro Crater.',
+    heroImage: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?auto=format&fit=crop&w=1000&q=80'
+    ],
+    destinations: ['Tarangire National Park', 'Lake Manyara', 'Central Serengeti', 'North Serengeti', 'Ngorongoro Crater'],
+    highlights: [
+      'Extensive 3 full days tracking predators and migrations across the Serengeti',
+      'Tarangire elephant sanctuaries and ancient baobab valleys',
+      'Descent into the 600m unbroken caldera of Ngorongoro Crater for endangered black rhino tracking',
+      'Flamingo flocks, baboon troops, and tree-climbing lions of Lake Manyara'
+    ],
+    startLocation: 'Arusha / Kilimanjaro Airport (JRO)',
+    endLocation: 'Arusha / Kilimanjaro Airport (JRO)',
+    bestSeason: 'Year-round (July–October for Mara River crossings; Jan–March for Southern Serengeti calving)',
+    accommodationNotes: 'Premium permanent tented camps and luxury safari lodges with private verandas, en-suite solar hot showers, and panoramic views.',
+    customizationOptions: [
+      'Serengeti Dawn Hot Air Balloon Safari with bush champagne breakfast',
+      'Authentic Maasai boma cultural immersion and medicinal plant walk',
+      'Scenic bush flight from North Serengeti back to Arusha to save driving hours'
+    ],
+    priceNote: 'Tailor-made private quote (Typically $4,200 - $6,400 pp based on season and party size)',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha & Safari Briefing',
+        description: 'Warm VIP welcome at Kilimanjaro International Airport (JRO) by your private Safari Care driver-guide. Transfer to your boutique garden hotel in Arusha. Evening safari briefing, vehicle orientation, and relaxing dinner.',
+        accommodation: 'Arusha Serena Hotel / Gran Melia Arusha',
+        meals: 'Dinner',
+        activities: ['Airport VIP Transfer', 'Safari Briefing'],
+        driveTime: '1 hour from JRO'
+      },
+      {
+        day: 2,
+        title: 'Arusha to Tarangire National Park',
+        description: 'Depart after breakfast towards Tarangire National Park, famed for gigantic baobabs and enormous elephant herds numbering in the hundreds. Full afternoon game drive following the Tarangire River.',
+        accommodation: 'Tarangire Safari Lodge / Maramboi Tented Lodge',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Scenic Rift Valley Drive', 'River Game Drive'],
+        driveTime: '~2.5 hours'
+      },
+      {
+        day: 3,
+        title: 'Full Day Wilderness Tracking in Tarangire',
+        description: 'Spend an entire day venturing into the remote southern sectors of Tarangire. Track fringe-eared oryx, lesser kudu, tree-climbing pythons, and resident lion prides that shelter in ancient tree hollows.',
+        accommodation: 'Tarangire Safari Lodge / Maramboi Tented Lodge',
+        meals: 'Breakfast, Picnic Lunch, Dinner',
+        activities: ['Full-Day Deep Bush Tracking', 'Bush Picnic']
+      },
+      {
+        day: 4,
+        title: 'Tarangire to Lake Manyara National Park',
+        description: 'Drive along the floor of the Great Rift Valley to Lake Manyara. Encounter baboon troops in lush fig forests, observe hippos at the aquatic observation deck, and scan acacia woodlands for elusive leopards.',
+        accommodation: 'Lake Manyara Serena Lodge / Escarpment Luxury Lodge',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Groundwater Forest Game Drive', 'Hippo Pool Boardwalk'],
+        driveTime: '~1.5 hours'
+      },
+      {
+        day: 5,
+        title: 'Highlands Transit to Central Serengeti (Seronera)',
+        description: 'Ascend through the Karatu farmlands and skirt the Ngorongoro crater rim before descending into the legendary Serengeti golden plains. First evening game drive in the Seronera Valley.',
+        accommodation: 'Kubu Kubu Tented Lodge / Serengeti Serena',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Crater Rim Scenic Transit', 'Sunset Serengeti Game Drive'],
+        driveTime: '~4.5 hours'
+      },
+      {
+        day: 6,
+        title: 'Central Serengeti Big Cat Safari',
+        description: 'Explore the Seronera river circuits, home to dense resident concentrations of lions, leopards, and cheetahs. Track lion prides resting atop granite kopjes and observe vultures circling predator kills.',
+        accommodation: 'Kubu Kubu Tented Lodge / Serengeti Serena',
+        meals: 'Breakfast, Bush Lunch, Dinner',
+        activities: ['Sunrise Predator Drive', 'Kopje Exploration']
+      },
+      {
+        day: 7,
+        title: 'Serengeti Plains to Western/Northern Corridor',
+        description: 'Follow seasonal migratory herds as they navigate crossing corridors, crocodile-filled rivers, and open savannah grasslands. Evening sundowner drinks in the wilderness.',
+        accommodation: 'Mara River Tented Camp / Serengeti Serena',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Migration Corridor Tracking', 'Bush Sundowners']
+      },
+      {
+        day: 8,
+        title: 'Serengeti to Ngorongoro Crater Rim',
+        description: 'Farewell morning game drive in the Serengeti. Ascend into the forested crater rim of Ngorongoro in late afternoon. Relax as mist blankets the volcano edge and enjoy fine dining by the fire.',
+        accommodation: 'Ngorongoro Serena Safari Lodge / Lion\'s Paw Camp',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Morning Serengeti Game Drive', 'Crater Rim Sunset'],
+        driveTime: '~3.5 hours'
+      },
+      {
+        day: 9,
+        title: 'Ngorongoro Crater Floor & Return to Arusha',
+        description: 'Dawn descent 600 meters to the crater floor. Spend 5 to 6 magnificent hours tracking the Big Five, including endangered black rhinos, giant tuskers, and flamingos at Lake Magadi. Return to Arusha in late afternoon for your flight home.',
+        accommodation: 'Day room / International Airport Connection',
+        meals: 'Breakfast, Bush Picnic Lunch',
+        activities: ['Caldera Floor Descent', 'Big Five Safari', 'Airport Transfer'],
+        driveTime: '~3.5 hours to Arusha'
+      }
+    ],
+    inclusions: [
+      'Private 4x4 Land Cruiser with pop-up photographic roof and unlimited game mileage',
+      'Dedicated certified Tanzanian wildlife safari guide',
+      'All 9 days of national park fees, crater transit, and conservation permits',
+      'Luxury lodge and boutique tented camp accommodations',
+      'Full board meals (Breakfast, gourmet bush lunch, multi-course dinners)',
+      'Complimentary bottled water, soft drinks, tea/coffee, and charging ports on board',
+      'AMREF Flying Doctors emergency medical evacuation insurance'
+    ],
+    exclusions: [
+      'International flights and Tanzania tourist visa',
+      'Optional Serengeti hot air balloon excursion ($599 pp)',
+      'Gratuities for driver-guide and lodge staff',
+      'Personal travel insurance and laundry services'
+    ],
+    seoTitle: '9-Day Northern Circuit In-Depth Tanzania Safari | Safari Care',
+    seoDescription: 'Experience the ultimate 9-day private Tanzanian safari covering Tarangire, Lake Manyara, Serengeti, and Ngorongoro Crater.',
+    status: 'published'
+  },
+  {
+    slug: '7-day-wildlife-photographers-safari',
+    title: '7-Day Dedicated Wildlife Photographer\'s Safari',
+    durationDays: 7,
+    circuit: 'Northern Circuit',
+    travelStyle: 'Photographic',
+    featured: true,
+    summary: 'A tailor-made safari engineered specifically for amateur and professional photographers: customized vehicles with beanbags, flexible golden-hour schedules, and guides trained in animal behavior and lighting.',
+    heroImage: 'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=1600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?auto=format&fit=crop&w=1000&q=80'
+    ],
+    destinations: ['Tarangire National Park', 'Serengeti National Park', 'Ngorongoro Crater'],
+    highlights: [
+      'Specialized 4x4 vehicle with removable side windows, camera beanbags, and inverter power stations',
+      'First vehicle out at dawn and last back at dusk to capture prime golden-hour illumination',
+      'Patience-first tracking designed around waiting for predator action, hunting sequences, and eye-level perspectives',
+      'Driver-guide certified in wildlife photography composition and positioning'
+    ],
+    startLocation: 'Arusha / Kilimanjaro Airport (JRO)',
+    endLocation: 'Arusha / Kilimanjaro Airport (JRO)',
+    bestSeason: 'Jan–March (Ndutu calving & predator action) or July–October (Mara crossings & dry dust dramatic lighting)',
+    accommodationNotes: 'Strategic wilderness tented camps located inside national parks to eliminate transit gate queues and maximize shooting hours.',
+    customizationOptions: [
+      'Private vehicle rental guarantee with maximum 3 photographers per 7-seat cruiser',
+      'Lens and gear rental coordination in Arusha (long telephoto 400mm-600mm lenses)',
+      'Special permit for night photography and astronomical starry skies'
+    ],
+    priceNote: 'Custom quote based on photographer count (Typically $3,600 - $5,400 pp)',
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arusha to Tarangire (Elephants & Baobab Silhouettes)',
+        description: 'Morning departure from Arusha to Tarangire. Set up camera rigs and practice vehicle shooting positions. Afternoon golden hour shoot along the Tarangire river banks capturing silhouettes of elephant herds against thousand-year-old baobabs.',
+        accommodation: 'Tarangire Safari Lodge (spectacular valley deck views)',
+        meals: 'Lunch, Dinner',
+        activities: ['Equipment Setup', 'Golden Hour River Shoot'],
+        driveTime: '~2.5 hours'
+      },
+      {
+        day: 2,
+        title: 'Tarangire Dawn Shoot & Transit to Serengeti',
+        description: 'Pre-dawn departure to shoot predators returning from night hunts in cool morning light. Midday transit through the highlands to Serengeti National Park, stopping for wide-angle landscape shots on the Ngorongoro rim.',
+        accommodation: 'Serengeti Wilderness Tented Camp',
+        meals: 'Breakfast, Picnic Lunch, Dinner',
+        activities: ['Dawn Silhouette Shoot', 'Highlands Landscape Photography'],
+        driveTime: '~5 hours scenic'
+      },
+      {
+        day: 3,
+        title: 'Serengeti Predator Action & Kopje Tracking',
+        description: 'Dedicated full day following leopard territories and cheetah hunting grounds. Positions chosen with optimal sun angle behind camera lenses. Midday break at camp for camera sensor cleaning and battery recharging.',
+        accommodation: 'Serengeti Wilderness Tented Camp',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Predator Action Sequences', 'Midday Gear Maintenance', 'Dusk Shoot']
+      },
+      {
+        day: 4,
+        title: 'Serengeti Great Migration & Avian Photography',
+        description: 'Full day tracking massive herds of wildebeest and zebras. Focus on dynamic motion blur, panning shots, dust kick-ups, and dramatic interactions between herbivores and river crocodiles.',
+        accommodation: 'Serengeti Wilderness Tented Camp',
+        meals: 'Breakfast, Bush Lunch, Dinner',
+        activities: ['Motion Panning Photography', 'Dust & Light Action']
+      },
+      {
+        day: 5,
+        title: 'Serengeti Golden Morning & Transit to Ngorongoro',
+        description: 'Capture the warm first rays of sun illuminating golden savannah grasses. Scenic game drive towards the Ngorongoro crater rim, checking in to an elevated rim lodge with panoramic sunset vistas.',
+        accommodation: 'Ngorongoro Serena Safari Lodge',
+        meals: 'Breakfast, Lunch, Dinner',
+        activities: ['Golden Grass Sunrise Shoot', 'Crater Sunset Panorama'],
+        driveTime: '~3 hours'
+      },
+      {
+        day: 6,
+        title: 'Ngorongoro Crater Floor Wildlife Photography',
+        description: 'First vehicle down the steep caldera descent wall at 6:00 AM. Capture atmospheric fog lifting from the crater floor, black rhinos in morning dew, and flamingos shimmering on Lake Magadi.',
+        accommodation: 'Karatu Luxury Coffee Lodge',
+        meals: 'Breakfast, Picnic Lunch, Dinner',
+        activities: ['Early Dawn Caldera Shoot', 'Bird & Macro Photography']
+      },
+      {
+        day: 7,
+        title: 'Karatu Farmlands to Arusha & Departure',
+        description: 'Relaxed morning review of photographs and portfolio backup. Scenic return drive to Arusha with optional craft market photography stops, transferring to Kilimanjaro Airport (JRO) for evening flights.',
+        accommodation: 'Airport Departure Connection',
+        meals: 'Breakfast, Lunch',
+        activities: ['Photo Portfolio Review', 'Airport Transfer'],
+        driveTime: '~3 hours to JRO'
+      }
+    ],
+    inclusions: [
+      'Specially adapted 4x4 Land Cruiser with open-roof beanbag brackets and camera mounts',
+      'Certified photographic guide with deep understanding of light, angle, and animal anticipation',
+      'Maximum 3 photographers per vehicle to guarantee both sides shooting clearance',
+      'Inverter 220V charging ports for camera batteries and laptops',
+      'All 7 days of park fees, concession fees, and caldera permits',
+      'Full board accommodations and bush meals'
+    ],
+    exclusions: [
+      'Camera bodies and personal lenses (rental available upon request)',
+      'International flights and entry visas',
+      'Tips for guide and lodge crews'
+    ],
+    seoTitle: '7-Day Tanzania Wildlife Photography Safari | Safari Care',
+    seoDescription: 'Capture Tanzania’s extraordinary wildlife with specialized photographic 4x4 vehicles, golden-hour schedules, and master guides.',
     status: 'published'
   }
 ];
