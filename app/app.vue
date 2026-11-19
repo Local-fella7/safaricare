@@ -1,5 +1,16 @@
 <script setup lang="ts">
-// Global app entry point
+const route = useRoute();
+const siteUrl = 'https://www.safaricare.com';
+
+const canonicalPath = computed(() => {
+  const path = route.path.replace(/\/$/, '');
+  return `${siteUrl}${path || '/'}`;
+});
+
+useHead(computed(() => ({
+  link: [{ rel: 'canonical', href: canonicalPath.value }],
+  meta: [{ property: 'og:url', content: canonicalPath.value }]
+})));
 </script>
 
 <template>

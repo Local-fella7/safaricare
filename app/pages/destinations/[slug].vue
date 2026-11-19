@@ -13,6 +13,37 @@ useSeoMeta({
   ogDescription: () => destination.value?.summary ?? '',
   ogImage: () => destination.value?.heroImage ?? ''
 });
+
+const wildlifeIcon = (name: string): string => {
+  const value = name.toLowerCase();
+
+  if (value.includes('butterfly') || value.includes('butterflies')) return '🦋';
+  if (value.includes('flamingo')) return '🦩';
+  if (value.includes('turtle')) return '🐢';
+  if (value.includes('dolphin')) return '🐬';
+  if (value.includes('coral')) return '🪸';
+  if (value.includes('fish')) return '🐠';
+  if (value.includes('crocodile')) return '🐊';
+  if (value.includes('chameleon')) return '🦎';
+  if (value.includes('monkey') || value.includes('primate') || value.includes('mangabey') || value.includes('baboon') || value.includes('chimpanzee')) return '🐒';
+  if (value.includes('lion')) return '🦁';
+  if (value.includes('leopard') || value.includes('cheetah')) return '🐆';
+  if (value.includes('hyena')) return '🐺';
+  if (value.includes('dog')) return '🐕';
+  if (value.includes('elephant')) return '🐘';
+  if (value.includes('rhino')) return '🦏';
+  if (value.includes('hippo')) return '🦛';
+  if (value.includes('buffalo')) return '🐃';
+  if (value.includes('giraffe')) return '🦒';
+  if (value.includes('zebra')) return '🦓';
+  if (value.includes('wildebeest')) return '🐂';
+  if (value.includes('oryx') || value.includes('antelope') || value.includes('kudu') || value.includes('impala') || value.includes('gerenuk') || value.includes('duiker')) return '🦌';
+  if (value.includes('warthog') || value.includes('bushpig')) return '🐗';
+  if (value.includes('bird') || value.includes('avian') || value.includes('pelican') || value.includes('cormorant') || value.includes('stork')) return '🐦';
+  if (value.includes('baobab') || value.includes('plant') || value.includes('tree')) return '🌳';
+
+  return '🐾';
+};
 </script>
 
 <template>
@@ -126,9 +157,10 @@ useSeoMeta({
                 <span
                   v-for="animal in destination.wildlife"
                   :key="animal"
-                  class="badge bg-sc-forest bg-opacity-10 text-sc-forest border border-sc-forest border-opacity-25 py-2 px-3 fs-6 fw-medium"
+                  class="badge bg-sc-ivory text-sc-forest border py-2 px-3 fs-6 fw-medium d-inline-flex align-items-center gap-2"
                 >
-                  <i class="bi bi-binoculars me-1 text-sc-gold"></i> {{ animal }}
+                  <span aria-hidden="true">{{ wildlifeIcon(animal) }}</span>
+                  <span>{{ animal }}</span>
                 </span>
               </div>
             </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import MobileNav from '~/components/layout/MobileNav.vue'
+import { CONTACT } from '~/utils/contact'
 
 const isMobileMenuOpen = ref(false)
 const isScrolled = ref(false)
@@ -49,7 +50,7 @@ const closeDropdown = () => {
         </div>
         <div class="d-flex align-items-center gap-3">
           <a
-            href="https://wa.me/255700000000"
+            :href="CONTACT.whatsapp"
             target="_blank"
             rel="noopener noreferrer"
             class="text-white text-decoration-none d-inline-flex align-items-center gap-1 hover-gold"
@@ -59,11 +60,11 @@ const closeDropdown = () => {
           </a>
           <span class="opacity-50">|</span>
           <a
-            href="mailto:info@safaricare.com"
+            :href="`mailto:${CONTACT.email}`"
             class="text-white text-decoration-none d-inline-flex align-items-center gap-1 hover-gold"
           >
             <i class="bi bi-envelope text-sc-gold"></i>
-            <span>info@safaricare.com</span>
+            <span>{{ CONTACT.email }}</span>
           </a>
         </div>
       </div>
@@ -196,6 +197,11 @@ const closeDropdown = () => {
               </NuxtLink>
             </li>
             <li class="nav-item">
+              <NuxtLink to="/accommodations" class="nav-link" active-class="active" @click="closeDropdown">
+                Accommodation
+              </NuxtLink>
+            </li>
+            <li class="nav-item">
               <NuxtLink to="/travel-guide" class="nav-link" active-class="active" @click="closeDropdown">
                 Travel Guide
               </NuxtLink>
@@ -219,6 +225,8 @@ const closeDropdown = () => {
             class="btn btn-sc-outline-forest d-lg-none p-2 lh-1"
             type="button"
             aria-label="Toggle navigation menu"
+            :aria-expanded="isMobileMenuOpen"
+            aria-controls="mobile-navigation-drawer"
             @click="isMobileMenuOpen = !isMobileMenuOpen"
           >
             <i class="bi" :class="isMobileMenuOpen ? 'bi-x-lg' : 'bi-list'" style="font-size: 1.4rem;"></i>

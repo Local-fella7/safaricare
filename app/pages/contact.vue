@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InquiryForm from '~/components/forms/InquiryForm.vue';
+import { CONTACT } from '~/utils/contact';
 
 useSeoMeta({
   title: 'Contact Safari Care | Arusha Office, WhatsApp & Inquiries',
@@ -41,7 +42,7 @@ useSeoMeta({
               </div>
               <div>
                 <div class="fw-bold text-sc-forest">Arusha Headquarters</div>
-                <div class="small text-muted">Arusha-Moshi Road, P.O. Box 14200, Arusha, Tanzania</div>
+                <div class="small text-muted">{{ CONTACT.company }}, {{ CONTACT.address }}</div>
               </div>
             </div>
 
@@ -52,7 +53,7 @@ useSeoMeta({
               <div>
                 <div class="fw-bold text-sc-forest">Email Us</div>
                 <div class="small text-muted">
-                  <a href="mailto:info@safaricare.com" class="text-decoration-none text-muted">info@safaricare.com</a>
+                  <a :href="`mailto:${CONTACT.email}`" class="text-decoration-none text-muted">{{ CONTACT.email }}</a>
                 </div>
               </div>
             </div>
@@ -64,9 +65,24 @@ useSeoMeta({
               <div>
                 <div class="fw-bold text-sc-forest">WhatsApp Chat</div>
                 <div class="small text-muted">
-                  <a href="https://wa.me/255700000000" target="_blank" rel="noopener noreferrer" class="text-success text-decoration-none fw-semibold">
-                    +255 700 000 000 (Click to chat)
+                  <a :href="CONTACT.whatsapp" target="_blank" rel="noopener noreferrer" class="text-success text-decoration-none fw-semibold">
+                    {{ CONTACT.mobile2Label }} (Click to chat)
                   </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card p-3 rounded-3 bg-white border-0 shadow-sm d-flex flex-row align-items-center gap-3">
+              <div class="icon-box bg-sc-gold text-white rounded-circle p-3 fs-4 shadow-sm">
+                <i class="bi bi-telephone-fill"></i>
+              </div>
+              <div>
+                <div class="fw-bold text-sc-forest">Call Our Arusha Office</div>
+                <div class="small text-muted">
+                  Tel/Fax:
+                  <a :href="`tel:${CONTACT.phoneHref}`" class="text-muted text-decoration-none d-block">{{ CONTACT.phoneLabel }}</a>
+                  Mobile:
+                  <a :href="`tel:${CONTACT.mobile1Href}`" class="text-muted text-decoration-none d-block">{{ CONTACT.mobile1Label }}</a>
                 </div>
               </div>
             </div>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps<{
+import { CONTACT } from '~/utils/contact'
+
+const props = defineProps<{
   isOpen: boolean
 }>()
 
@@ -10,6 +12,22 @@ const emit = defineEmits<{
 const handleClose = () => {
   emit('close')
 }
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && props.isOpen) emit('close')
+}
+
+watch(() => props.isOpen, (open) => {
+  if (typeof document === 'undefined') return
+  document.body.style.overflow = open ? 'hidden' : ''
+  if (open) window.addEventListener('keydown', handleKeydown)
+  else window.removeEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  if (typeof document !== 'undefined') document.body.style.overflow = ''
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
@@ -25,7 +43,11 @@ const handleClose = () => {
     <transition name="slide-drawer">
       <div
         v-if="isOpen"
+        id="mobile-navigation-drawer"
         class="mobile-drawer position-fixed top-0 end-0 h-100 bg-white shadow-lg d-flex flex-column z-index-modal p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
       >
         <div class="d-flex justify-content-between align-items-center pb-3 border-bottom">
           <NuxtLink to="/" class="text-decoration-none" @click="handleClose">
@@ -68,6 +90,11 @@ const handleClose = () => {
               </NuxtLink>
             </li>
             <li>
+              <NuxtLink to="/accommodations" class="mobile-link" @click="handleClose">
+                <i class="bi bi-house-door me-2 text-sc-gold"></i> Accommodation
+              </NuxtLink>
+            </li>
+            <li>
               <NuxtLink to="/travel-guide" class="mobile-link" @click="handleClose">
                 <i class="bi bi-journal-bookmark me-2 text-sc-gold"></i> Travel Guide & FAQ
               </NuxtLink>
@@ -89,7 +116,7 @@ const handleClose = () => {
             <i class="bi bi-calendar-check me-2"></i> Custom Safari Planner
           </NuxtLink>
           <a
-            href="https://wa.me/255700000000"
+            :href="CONTACT.whatsapp"
             target="_blank"
             rel="noopener noreferrer"
             class="btn btn-outline-success w-100 py-2 d-flex align-items-center justify-content-center gap-2"

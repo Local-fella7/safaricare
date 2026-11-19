@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CONTACT } from '~/utils/contact';
+
 const currentYear = new Date().getFullYear();
 </script>
 
@@ -72,16 +74,13 @@ const currentYear = new Date().getFullYear();
             Locally owned and based in Arusha, Tanzania. We specialize in private, bespoke safari experiences, Great Migration wildlife tracking, Mount Kilimanjaro mountaineering expeditions, and idyllic Zanzibar beach holidays.
           </p>
           <div class="d-flex align-items-center gap-3">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+            <a :href="CONTACT.facebook" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Safari Care on Facebook">
               <i class="bi bi-facebook"></i>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-              <i class="bi bi-instagram"></i>
+            <a :href="CONTACT.twitter" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Safari Care on Twitter">
+              <i class="bi bi-twitter-x"></i>
             </a>
-            <a href="https://tripadvisor.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TripAdvisor">
-              <i class="bi bi-star-fill"></i>
-            </a>
-            <a href="https://wa.me/255700000000" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+            <a :href="CONTACT.whatsapp" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Chat on WhatsApp">
               <i class="bi bi-whatsapp"></i>
             </a>
           </div>
@@ -129,7 +128,16 @@ const currentYear = new Date().getFullYear();
               <NuxtLink to="/destinations/zanzibar-archipelago" class="footer-link">Zanzibar Archipelago</NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/trekking" class="footer-link">Kilimanjaro Trekking Routes</NuxtLink>
+              <NuxtLink to="/destinations/lake-manyara-national-park" class="footer-link">Lake Manyara National Park</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/destinations/selous-game-reserve" class="footer-link">Selous (Nyerere) Game Reserve</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/trekking" class="footer-link">Kilimanjaro & Meru Treks</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/accommodations" class="footer-link">Safari Accommodation</NuxtLink>
             </li>
             <li>
               <NuxtLink to="/travel-guide" class="footer-link">Tanzania Packing & Travel Tips</NuxtLink>
@@ -143,21 +151,25 @@ const currentYear = new Date().getFullYear();
           <ul class="list-unstyled d-flex flex-column gap-3 small text-white-50">
             <li class="d-flex align-items-start gap-2">
               <i class="bi bi-geo-alt-fill text-sc-gold mt-1"></i>
-              <span>Safari Care Ltd, Arusha-Moshi Road, P.O. Box 14200, Arusha, Tanzania</span>
+              <span>{{ CONTACT.company }}, {{ CONTACT.address }}</span>
             </li>
             <li class="d-flex align-items-center gap-2">
               <i class="bi bi-telephone-fill text-sc-gold"></i>
-              <a href="tel:+255700000000" class="footer-link text-white-50">+255 700 000 000</a>
+              <a :href="`tel:${CONTACT.phoneHref}`" class="footer-link text-white-50">{{ CONTACT.phoneLabel }}</a>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <i class="bi bi-telephone text-sc-gold"></i>
+              <a :href="`tel:${CONTACT.mobile1Href}`" class="footer-link text-white-50">{{ CONTACT.mobile1Label }}</a>
             </li>
             <li class="d-flex align-items-center gap-2">
               <i class="bi bi-whatsapp text-success"></i>
-              <a href="https://wa.me/255700000000" target="_blank" rel="noopener noreferrer" class="footer-link text-white-50">
-                +255 700 000 000 (WhatsApp)
+              <a :href="CONTACT.whatsapp" target="_blank" rel="noopener noreferrer" class="footer-link text-white-50">
+                {{ CONTACT.mobile2Label }} (WhatsApp)
               </a>
             </li>
             <li class="d-flex align-items-center gap-2">
               <i class="bi bi-envelope-fill text-sc-gold"></i>
-              <a href="mailto:info@safaricare.com" class="footer-link text-white-50">info@safaricare.com</a>
+              <a :href="`mailto:${CONTACT.email}`" class="footer-link text-white-50">{{ CONTACT.email }}</a>
             </li>
           </ul>
 
@@ -182,7 +194,7 @@ const currentYear = new Date().getFullYear();
             <span>•</span>
             <NuxtLink to="/contact" class="footer-link text-white-50">Contact Us</NuxtLink>
             <span>•</span>
-            <span class="text-white-50">Privacy & Terms</span>
+            <NuxtLink to="/accommodations" class="footer-link text-white-50">Accommodation</NuxtLink>
           </div>
         </div>
       </div>

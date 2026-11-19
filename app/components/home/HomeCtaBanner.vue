@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Section 10 Final CTA
+import { CONTACT } from '~/utils/contact';
 </script>
 
 <template>
@@ -29,7 +29,7 @@
           <span>Plan Your Safari Now</span>
         </NuxtLink>
         <a
-          href="https://wa.me/255700000000"
+          :href="CONTACT.whatsapp"
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-outline-light btn-lg px-4 py-3 d-inline-flex align-items-center gap-2"

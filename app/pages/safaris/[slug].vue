@@ -2,6 +2,7 @@
 import ItineraryTimeline from '~/components/safari/ItineraryTimeline.vue';
 import SafariRouteMap from '~/components/safari/SafariRouteMap.vue';
 import SafariCard from '~/components/safari/SafariCard.vue';
+import { CONTACT } from '~/utils/contact';
 import type { SafariPackage } from '~/shared/types';
 
 const route = useRoute();
@@ -116,7 +117,7 @@ useSeoMeta({
               <i class="bi bi-calendar-check me-2"></i> Customize This Safari
             </NuxtLink>
             <a
-              :href="`https://wa.me/255700000000?text=${encodeURIComponent(`Hello Safari Care, I would like to inquire about the ${safari.title}.`)}`"
+              :href="`${CONTACT.whatsapp}?text=${encodeURIComponent(`Hello Safari Care, I would like to inquire about the ${safari.title}.`)}`"
               target="_blank"
               rel="noopener noreferrer"
               class="btn btn-outline-light px-3 py-2 d-inline-flex align-items-center gap-2"
@@ -404,7 +405,7 @@ useSeoMeta({
                   </NuxtLink>
 
                   <a
-                    :href="`https://wa.me/255700000000?text=${encodeURIComponent(`Hello Safari Care, I would like to inquire about the ${safari.title}.`)}`"
+                    :href="`${CONTACT.whatsapp}?text=${encodeURIComponent(`Hello Safari Care, I would like to inquire about the ${safari.title}.`)}`"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-outline-success w-100 py-2 d-flex align-items-center justify-content-center gap-2"
@@ -436,11 +437,15 @@ useSeoMeta({
                   <div class="d-flex flex-column gap-2 small text-muted">
                     <div>
                       <i class="bi bi-telephone-fill text-sc-gold me-2"></i>
-                      <span>+255 700 000 000</span>
+                      <a :href="`tel:${CONTACT.phoneHref}`" class="text-decoration-none text-muted">{{ CONTACT.phoneLabel }}</a>
+                    </div>
+                    <div>
+                      <i class="bi bi-phone-fill text-sc-gold me-2"></i>
+                      <a :href="`tel:${CONTACT.mobile2Href}`" class="text-decoration-none text-muted">{{ CONTACT.mobile2Label }}</a>
                     </div>
                     <div>
                       <i class="bi bi-envelope-fill text-sc-gold me-2"></i>
-                      <span>info@safaricare.com</span>
+                      <a :href="`mailto:${CONTACT.email}`" class="text-decoration-none text-muted">{{ CONTACT.email }}</a>
                     </div>
                   </div>
                 </div>

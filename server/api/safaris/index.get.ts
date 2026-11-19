@@ -8,12 +8,15 @@ export default defineEventHandler((event) => {
     results = results.filter((s) => s.featured);
   }
 
-  if (query.circuit && typeof query.circuit === 'string') {
-    results = results.filter((s) => s.circuit.toLowerCase().includes(query.circuit.toLowerCase()));
+  const circuit = typeof query.circuit === 'string' ? query.circuit.toLowerCase() : '';
+  const style = typeof query.style === 'string' ? query.style.toLowerCase() : '';
+
+  if (circuit) {
+    results = results.filter((s) => s.circuit.toLowerCase().includes(circuit));
   }
 
-  if (query.style && typeof query.style === 'string') {
-    results = results.filter((s) => s.travelStyle.toLowerCase().includes(query.style.toLowerCase()));
+  if (style) {
+    results = results.filter((s) => s.travelStyle.toLowerCase().includes(style));
   }
 
   return results;

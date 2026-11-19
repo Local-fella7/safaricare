@@ -1,5 +1,7 @@
 import { eventHandler, appendResponseHeader, getHeader } from 'h3';
 
+declare const process: { env: Record<string, string | undefined> };
+
 const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",

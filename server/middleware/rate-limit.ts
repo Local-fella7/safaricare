@@ -15,7 +15,7 @@ let lastCleanup = Date.now();
 function getClientIP(event: any): string {
   const forwarded = event.node.req.headers['x-forwarded-for'];
   if (forwarded) {
-    return String(forwarded).split(',')[0].trim();
+    return String(forwarded).split(',')[0]?.trim() || 'unknown';
   }
   return event.node.req.connection?.remoteAddress || 'unknown';
 }
