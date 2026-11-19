@@ -21,7 +21,7 @@ const values = [
     text: 'Certified, multilingual Tanzanian naturalist guides with decades of bushcraft experience, keen wildlife tracking instincts, and continuous professional training.'
   },
   {
-    icon: 'bi-gem',
+    icon: 'bi-award-fill',
     title: 'Uncompromising Quality',
     text: 'From customized 4WD cruisers to vetted luxury tented camps, we ensure seamless logistics and obsessive attention to detail.'
   }
@@ -89,7 +89,7 @@ const values = [
             class="col-md-6 col-lg-3"
           >
             <div class="card card-sc border-0 shadow-sm p-4 bg-white h-100 rounded-4">
-              <div class="icon-circle bg-sc-forest bg-opacity-10 text-sc-forest rounded-circle d-flex align-items-center justify-content-center mb-3 fs-3" style="width: 54px; height: 54px;">
+              <div class="icon-circle mb-3">
                 <i :class="`bi ${v.icon}`"></i>
               </div>
               <h3 class="font-serif h5 fw-bold text-sc-forest mb-2">{{ v.title }}</h3>
@@ -151,5 +151,28 @@ const values = [
 <style scoped lang="scss">
 .about-us-view {
   background-color: var(--sc-ivory);
+}
+
+.icon-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: var(--sc-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(67, 118, 108, 0.25);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+
+  i {
+    color: #ffffff !important;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+}
+
+.card-sc:hover .icon-circle {
+  transform: scale(1.08);
+  background-color: var(--sc-gold);
 }
 </style>
