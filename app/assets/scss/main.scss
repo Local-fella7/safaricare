@@ -30,6 +30,14 @@ $border-radius: 0.75rem;
 $border-radius-sm: 0.5rem;
 $border-radius-lg: 1.25rem;
 
+$container-max-widths: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1320px,
+  xxl: 1760px
+);
+
 // 3. Import Bootstrap Source & Icons
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
