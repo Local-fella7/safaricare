@@ -1,4 +1,4 @@
-import type { Destination } from '../../shared/types';
+import type { Destination } from '#shared/types';
 
 export const destinationsData: Destination[] = [
   {

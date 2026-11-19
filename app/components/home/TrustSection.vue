@@ -67,7 +67,7 @@ const testimonials = [
           class="col-md-6 col-lg-3"
         >
           <div class="pillar-card p-4 rounded-4 bg-white shadow-sm h-100 border border-light">
-            <div class="pillar-icon rounded-circle bg-sc-forest bg-opacity-10 text-sc-forest d-flex align-items-center justify-content-center mb-3 fs-3">
+            <div class="pillar-icon rounded-circle bg-sc-forest text-white d-flex align-items-center justify-content-center mb-3 fs-3 shadow-sm">
               <i :class="`bi ${pillar.icon}`"></i>
             </div>
             <h3 class="font-serif fw-bold h5 text-sc-forest mb-2">{{ pillar.title }}</h3>

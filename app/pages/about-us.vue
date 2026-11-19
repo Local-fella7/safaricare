@@ -16,12 +16,12 @@ const values = [
     text: 'A portion of every safari booked directly supports local community schools and anti-poaching wildlife corridor protection in northern Tanzania.'
   },
   {
-    icon: 'bi-shield-shaded',
-    title: 'Fair & Ethical Employment',
-    text: 'Our safari guides and mountain porters receive industry-leading fair compensation, full insurance coverage, and continuous professional training.'
+    icon: 'bi-person-badge-fill',
+    title: 'Professional Guides',
+    text: 'Certified, multilingual Tanzanian naturalist guides with decades of bushcraft experience, keen wildlife tracking instincts, and continuous professional training.'
   },
   {
-    icon: 'bi-gem',
+    icon: 'bi-award-fill',
     title: 'Uncompromising Quality',
     text: 'From customized 4WD cruisers to vetted luxury tented camps, we ensure seamless logistics and obsessive attention to detail.'
   }
@@ -46,9 +46,9 @@ const values = [
       <!-- Page Intro -->
       <div class="row align-items-center g-5 mb-5">
         <div class="col-lg-6">
-          <span class="badge-sc-terracotta d-inline-block mb-2">Our Story</span>
+          <span class="badge-sc-terracotta d-inline-block mb-2">Passionate About Tanzania &amp; Conservation</span>
           <h1 class="font-serif fw-bold text-sc-forest display-5 mb-3">
-            Born in Arusha. Guided by Passion.
+            Extraordinary Journeys. Authentic Tanzanian Hospitality.
           </h1>
           <p class="lead text-muted fs-6 mb-3">
             Safari Care was founded with a singular, resolute mission: to showcase the untamed beauty of Tanzania with warmth, unrivaled local expertise, and an unwavering respect for African wilderness.
@@ -69,8 +69,8 @@ const values = [
         <div class="col-lg-6">
           <div class="rounded-4 overflow-hidden shadow-lg" style="height: 420px;">
             <img
-              src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80"
-              alt="Safari Care Land Cruiser on the Serengeti Plains"
+              src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80"
+              alt="Safari Land Cruiser in Tanzania"
               class="w-100 h-100 object-fit-cover"
             />
           </div>
@@ -89,7 +89,7 @@ const values = [
             class="col-md-6 col-lg-3"
           >
             <div class="card card-sc border-0 shadow-sm p-4 bg-white h-100 rounded-4">
-              <div class="icon-circle bg-sc-forest bg-opacity-10 text-sc-forest rounded-circle d-flex align-items-center justify-content-center mb-3 fs-3" style="width: 54px; height: 54px;">
+              <div class="icon-circle mb-3">
                 <i :class="`bi ${v.icon}`"></i>
               </div>
               <h3 class="font-serif h5 fw-bold text-sc-forest mb-2">{{ v.title }}</h3>
@@ -136,8 +136,8 @@ const values = [
           <div class="col-lg-6 order-lg-1">
             <div class="rounded-4 overflow-hidden shadow-sm" style="height: 360px;">
               <img
-                src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1000&q=80"
-                alt="Safari Land Cruiser in Tanzania"
+                src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=80"
+                alt="Safari Care Land Cruiser on the Serengeti Plains"
                 class="w-100 h-100 object-fit-cover"
               />
             </div>
@@ -151,5 +151,28 @@ const values = [
 <style scoped lang="scss">
 .about-us-view {
   background-color: var(--sc-ivory);
+}
+
+.icon-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: var(--sc-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(67, 118, 108, 0.25);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+
+  i {
+    color: #ffffff !important;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+}
+
+.card-sc:hover .icon-circle {
+  transform: scale(1.08);
+  background-color: var(--sc-gold);
 }
 </style>
