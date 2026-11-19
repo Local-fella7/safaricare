@@ -16,7 +16,8 @@ export function useSafariInquiry() {
     duration: '6-8 days',
     budget: 'luxury',
     message: '',
-    consent: true
+    consent: true,
+    website: ''
   });
 
   const resetForm = () => {
@@ -30,6 +31,7 @@ export function useSafariInquiry() {
     formData.budget = 'luxury';
     formData.message = '';
     formData.consent = true;
+    formData.website = '';
     errors.value = {};
     isSuccess.value = false;
     submitMessage.value = '';

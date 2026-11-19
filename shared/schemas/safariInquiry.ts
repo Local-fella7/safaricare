@@ -22,6 +22,10 @@ export const safariInquirySchema = z.object({
   message: z.string().trim().max(3000, 'Message cannot exceed 3000 characters').optional(),
   consent: z.literal(true, {
     errorMap: () => ({ message: 'You must accept the privacy policy to proceed' })
+  }),
+  // Honeypot field: must remain empty. Bots often fill all fields.
+  website: z.string().optional().refine((val) => !val || val.trim() === '', {
+    message: 'Invalid submission'
   })
 });
 

@@ -279,6 +279,18 @@ const handleSubmit = async () => {
         </div>
       </div>
 
+      <!-- Honeypot field: hidden from users, filled by bots -->
+      <input
+        id="website"
+        name="website"
+        v-model="formData.website"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
+      />
+
       <!-- Submit Button -->
       <button
         type="submit"
